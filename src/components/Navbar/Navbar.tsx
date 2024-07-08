@@ -12,23 +12,42 @@ import {
 const Navbar = () => {
   const navLinks = (
     <div className="space-x-10">
-      <NavLink className={"hover:text-lime-400 duration-300 text-xl"} to={"/"}>
+      <NavLink
+        className={({ isActive }) =>
+          `hover:text-lime-400 duration-300 text-xl ${
+            isActive && "text-lime-400"
+          }`
+        }
+        to={"/"}
+      >
         Home
       </NavLink>
       <NavLink
-        className={"hover:text-lime-400 duration-300 text-xl"}
+        className={({ isActive }) =>
+          `hover:text-lime-400 duration-300 text-xl ${
+            isActive && "text-lime-400"
+          }`
+        }
         to={"/products"}
       >
         All Products
       </NavLink>
       <NavLink
-        className={"hover:text-lime-400 duration-300 text-xl"}
+        className={({ isActive }) =>
+          `hover:text-lime-400 duration-300 text-xl ${
+            isActive && "text-lime-400"
+          }`
+        }
         to={"/manage-products"}
       >
         Manage Products
       </NavLink>
       <NavLink
-        className={"hover:text-lime-400 duration-300 text-xl"}
+        className={({ isActive }) =>
+          `hover:text-lime-400 duration-300 text-xl ${
+            isActive && "text-lime-400"
+          }`
+        }
         to={"/about"}
       >
         About Us
@@ -42,9 +61,12 @@ const Navbar = () => {
         <SheetTrigger className="flex lg:hidden text-3xl">
           <FaBars />
         </SheetTrigger>
-        <SheetContent side={"left"} className="bg-black bg-opacity-50 text-white">
+        <SheetContent
+          side={"left"}
+          className="bg-black bg-opacity-50 text-white"
+        >
           <SheetHeader>
-            <SheetTitle ></SheetTitle>
+            <SheetTitle></SheetTitle>
             <SheetDescription>
               <li className="list-none text-white py-3 border-b">
                 <NavLink
@@ -104,7 +126,12 @@ const Navbar = () => {
       {/* pc/laptop */}
       <div className="max-w-screen-2xl mx-auto hidden lg:flex items-center justify-between">
         <div className="flex justify-start">
-          <h1>Active Gear Zone</h1>
+          <NavLink
+            className={"text-xl"}
+            to={"/"}
+          >
+            <h1>Active Gear Zone</h1>
+          </NavLink>
         </div>
         <div className="flex justify-center">{navLinks}</div>
         <div className="flex justify-end">

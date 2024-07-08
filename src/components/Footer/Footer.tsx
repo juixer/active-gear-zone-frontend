@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa6";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { NavLink } from "react-router-dom";
 const Footer = () => {
   const date = new Date();
 
@@ -55,20 +56,20 @@ const Footer = () => {
           <h2 className="text-xl font-medium uppercase">Quick links</h2>
           <ul>
             <li className=" mt-2 hover:text-white text-zinc-500 duration-300 cursor-pointer">
-              Home
+              <NavLink to={"/"}>Home</NavLink>
             </li>
 
             <li className=" mt-2 hover:text-white text-zinc-500 duration-300 cursor-pointer">
-              All Products
+              <NavLink to={"/products"}>All Products</NavLink>
             </li>
             <li className=" mt-2 hover:text-white text-zinc-500 duration-300 cursor-pointer">
-              Manage Products
+              <NavLink to={"/manage-products"}>Manage Products</NavLink>
             </li>
             <li className=" mt-2 hover:text-white text-zinc-500 duration-300 cursor-pointer">
-              Cart
+              <NavLink to={"/about"}>About Us</NavLink>
             </li>
             <li className=" mt-2 hover:text-white text-zinc-500 duration-300 cursor-pointer">
-              About Us
+              <NavLink to={"/cart"}>Cart</NavLink>
             </li>
           </ul>
         </div>
