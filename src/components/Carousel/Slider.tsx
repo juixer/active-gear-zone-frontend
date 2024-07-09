@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -13,7 +11,7 @@ const Slider = () => {
   const items = [
     {
       img: "https://i.ibb.co/XDm9ZGT/pic-1-1.png",
-      text: "Unleash your Potential with Elite Gear",
+      text: "Black Friday! up to 60% off",
     },
     {
       img: "https://i.ibb.co/FsFRb6Y/pic-2-1.png",
@@ -21,7 +19,7 @@ const Slider = () => {
     },
     {
       img: "https://i.ibb.co/XDynBQr/pic-5.png",
-      text: "Unleash your Potential with Elite Gear",
+      text: "Black Friday! up to 60% off",
     },
     {
       img: "https://i.ibb.co/JC2F1bZ/pic-4-1.png",
@@ -30,7 +28,7 @@ const Slider = () => {
   ];
   return (
     <Carousel
-      className="w-full"
+      className="w-full py-5"
       plugins={[
         Autoplay({
           delay: 4000,
@@ -50,7 +48,7 @@ const Slider = () => {
                 </h1>
                 <NavLink to={"/products"}>
                   <Button className="bg-baseColor hover:bg-lime-600 duration-300 text-black">
-                    Discover Now
+                    Discovery Now
                   </Button>
                 </NavLink>
               </div>
@@ -59,8 +57,6 @@ const Slider = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
     </Carousel>
   );
 };
