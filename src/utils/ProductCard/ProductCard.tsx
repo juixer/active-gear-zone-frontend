@@ -8,9 +8,18 @@ import {
 import { Button } from "../../components/ui/button";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-const ProductCard = () => {
+
+type TCardContent = {
+  row?: string;
+};
+
+const ProductCard = ({ row }: TCardContent) => {
   return (
-    <Card className="flex flex-col md:flex-row justify-center items-center shadow-xl">
+    <Card
+      className={`flex flex-col ${
+        row ? "md:flex-row" : "md:flex-col"
+      } justify-center items-center shadow-xl`}
+    >
       <CardHeader className="flex-2">
         <CardTitle className="overflow-hidden rounded-md flex flex-col justify-center items-center relative">
           <img

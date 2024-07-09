@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import Autoplay from "embla-carousel-autoplay";
 
-type TCategories = {
+export type TCategories = {
   img: string;
   text: string;
 };
