@@ -1,7 +1,13 @@
+import Slider from "@/components/Carousel/Slider";
+import Container from "@/components/layout/Container";
+
 const Home = () => {
-    return(
-        <div>
-             <h1> This is Home Component </h1>
-        </div>
-    )}
+  return (
+    <div>
+      <Container>
+        <Slider />
+      </Container>
+    </div>
+  );
+};
 export default Home;
