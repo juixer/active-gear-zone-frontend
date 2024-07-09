@@ -14,8 +14,8 @@ const Navbar = () => {
     <div className="space-x-10">
       <NavLink
         className={({ isActive }) =>
-          `hover:text-lime-400 duration-300 text-xl ${
-            isActive && "text-lime-400"
+          `hover:text-baseColor duration-300 text-xl ${
+            isActive && "text-baseColor"
           }`
         }
         to={"/"}
@@ -24,8 +24,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-lime-400 duration-300 text-xl ${
-            isActive && "text-lime-400"
+          `hover:text-baseColor duration-300 text-xl ${
+            isActive && "text-baseColor"
           }`
         }
         to={"/products"}
@@ -34,8 +34,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-lime-400 duration-300 text-xl ${
-            isActive && "text-lime-400"
+          `hover:text-baseColor duration-300 text-xl ${
+            isActive && "text-baseColor"
           }`
         }
         to={"/manage-products"}
@@ -44,8 +44,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-lime-400 duration-300 text-xl ${
-            isActive && "text-lime-400"
+          `hover:text-baseColor duration-300 text-xl ${
+            isActive && "text-baseColor"
           }`
         }
         to={"/about"}
@@ -71,7 +71,7 @@ const Navbar = () => {
               <li className="list-none text-white py-3 border-b">
                 <NavLink
                   className={({ isActive }) =>
-                    `text-xl ${isActive && "text-lime-400"}`
+                    `text-xl ${isActive && "text-baseColor"}`
                   }
                   to={"/"}
                 >
@@ -81,7 +81,7 @@ const Navbar = () => {
               <li className="list-none text-white py-3 border-b">
                 <NavLink
                   className={({ isActive }) =>
-                    `text-xl ${isActive && "text-lime-400"}`
+                    `text-xl ${isActive && "text-baseColor"}`
                   }
                   to={"/products"}
                 >
@@ -91,7 +91,7 @@ const Navbar = () => {
               <li className="list-none text-white py-3 border-b">
                 <NavLink
                   className={({ isActive }) =>
-                    `text-xl ${isActive && "text-lime-400"}`
+                    `text-xl ${isActive && "text-baseColor"}`
                   }
                   to={"/manage-products"}
                 >
@@ -101,7 +101,7 @@ const Navbar = () => {
               <li className="list-none text-white py-3 border-b">
                 <NavLink
                   className={({ isActive }) =>
-                    `text-xl ${isActive && "text-lime-400"}`
+                    `text-xl ${isActive && "text-baseColor"}`
                   }
                   to={"/about"}
                 >
@@ -111,7 +111,7 @@ const Navbar = () => {
               <li className="list-none text-white py-3 border-b">
                 <NavLink
                   className={({ isActive }) =>
-                    `text-xl ${isActive && "text-lime-400"}`
+                    `text-xl ${isActive && "text-baseColor"}`
                   }
                   to={"/cart"}
                 >
@@ -126,17 +126,14 @@ const Navbar = () => {
       {/* pc/laptop */}
       <div className="max-w-screen-2xl mx-auto hidden lg:flex items-center justify-between">
         <div className="flex justify-start">
-          <NavLink
-            className={"text-xl"}
-            to={"/"}
-          >
-            <h1>Active Gear Zone</h1>
+          <NavLink className={"text-xl"} to={"/"}>
+            <img src="https://i.ibb.co/QmkBvmg/Brimston-1.png" className="w-24"/>
           </NavLink>
         </div>
         <div className="flex justify-center">{navLinks}</div>
         <div className="flex justify-end">
           <NavLink
-            className={"hover:text-lime-400 duration-300 text-xl"}
+            className={"hover:text-baseColor duration-300 text-xl"}
             to={"/cart"}
           >
             <FaCartShopping className="text-xl" />

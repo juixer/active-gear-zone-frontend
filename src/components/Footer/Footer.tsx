@@ -20,16 +20,16 @@ const Footer = () => {
         <div className="space-y-3">
           <h2 className="text-xl font-medium uppercase">About Us</h2>
           <p className="text-zinc-500 ">
-            Welcome to Active Gear Zone. We are dedicated to supporting athletes
-            of all levels with the best products and outstanding customer
-            service. Let's gear up and achieve greatness together!
+            Welcome to Active Gear. We are dedicated to supporting athletes of
+            all levels with the best products and outstanding customer service.
+            Let's gear up and achieve greatness together!
           </p>
           <div className="flex gap-2 text-2xl">
-            <FaFacebook className="cursor-pointer hover:bg-lime-400 hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
-            <FaInstagram className="cursor-pointer hover:bg-lime-400 hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
-            <FaXTwitter className="cursor-pointer hover:bg-lime-400 hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
-            <FaYoutube className="cursor-pointer hover:bg-lime-400 hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
-            <FaTiktok className="cursor-pointer hover:bg-lime-400 hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
+            <FaFacebook className="cursor-pointer hover:bg-baseColor hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
+            <FaInstagram className="cursor-pointer hover:bg-baseColor hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
+            <FaXTwitter className="cursor-pointer hover:bg-baseColor hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
+            <FaYoutube className="cursor-pointer hover:bg-baseColor hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
+            <FaTiktok className="cursor-pointer hover:bg-baseColor hover:text-black hover:border-none duration-300 border rounded-full p-2 text-4xl " />
           </div>
         </div>
 
@@ -86,7 +86,7 @@ const Footer = () => {
               placeholder="Email"
             />
             <Button
-              className="bg-lime-400 rounded-r-full absolute right-0 text-black hover:bg-lime-600 duration-300 "
+              className="bg-baseColor rounded-r-full absolute right-0 text-black hover:bg-lime-600 duration-300 "
               type="submit"
             >
               <FaRightLong />
@@ -97,7 +97,7 @@ const Footer = () => {
       <hr className="border-zinc-800 mb-1" />
       <div className="flex justify-center items-center">
         <p className="text-sm text-zinc-500">
-          Copyright © {getYear} Active Gear Zone. All rights reserved.
+          Copyright © {getYear} Active Gear. All rights reserved.
         </p>
       </div>
     </div>
