@@ -1,13 +1,15 @@
 import Slider from "@/components/Carousel/Slider";
+import CategoryCarouSel from "@/components/CategoryCarousel/CategoryCarouSel";
 import Container from "@/components/layout/Container";
-import ProductCard from "@/components/ProductCard/ProductCard";
+import Headline from "@/utils/Headline/Headline";
+import ProductCard from "@/utils/ProductCard/ProductCard";
 
 const Home = () => {
   return (
     <div>
       <Container>
         <Slider />
-        <h1 className="text-4xl text-center uppercase ">latest products</h1>
+        <Headline text="latest product" />
 
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 py-5">
           <ProductCard />
@@ -15,6 +17,10 @@ const Home = () => {
           <ProductCard />
           <ProductCard />
         </div>
+
+        <Headline text="our categories" />
+
+        <CategoryCarouSel />
       </Container>
     </div>
   );
