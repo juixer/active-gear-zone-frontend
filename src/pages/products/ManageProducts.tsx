@@ -30,7 +30,7 @@ const ManageProducts = () => {
     },
     {
       img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Running Shoes",
+      text: "Shoes",
     },
     {
       img: "https://i.ibb.co/0mTSw8N/swimming.png",
@@ -199,7 +199,9 @@ const ManageProducts = () => {
         <TabsContent value="update">
           <ProductTable table="Update" />
         </TabsContent>
-        <TabsContent value="delete"><ProductTable table="Delete" /></TabsContent>
+        <TabsContent value="delete">
+          <ProductTable table="Delete" />
+        </TabsContent>
       </Tabs>
     </Container>
   );

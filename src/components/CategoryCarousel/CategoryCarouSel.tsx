@@ -28,7 +28,7 @@ const CategoryCarouSel = () => {
     },
     {
       img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Running Shoes",
+      text: "Shoes",
     },
     {
       img: "https://i.ibb.co/0mTSw8N/swimming.png",

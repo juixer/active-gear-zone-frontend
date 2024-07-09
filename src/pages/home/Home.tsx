@@ -13,10 +13,10 @@ const Home = () => {
         <Headline text="latest product" />
 
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 py-5">
-          <ProductCard row="row" />
-          <ProductCard row="row" />
-          <ProductCard row="row" />
-          <ProductCard row="row" />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
         </div>
 
         <Headline text="our categories" />

@@ -25,7 +25,7 @@ const ProductTable = ({ table }: TTableContent) => {
           <TableHead>Stock quantity</TableHead>
           <TableHead>Rating</TableHead>
           <TableHead>Image</TableHead>
-          <TableHead>Price</TableHead>
+          <TableHead>Price</TableHead>``
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
       </TableHeader>

@@ -12,9 +12,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FaStar } from "react-icons/fa6";
-import ProductCard from "@/utils/ProductCard/ProductCard";
+import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
+import { useGetProductsQuery } from "@/redux/features/product/product.api";
 
 const AllProducts = () => {
+  const { isLoading, error, data } = useGetProductsQuery(undefined, {
+    pollingInterval: 30000,
+    skipPollingIfUnfocused: true,
+  });
   const categories: TCategories[] = [
     {
       img: "https://i.ibb.co/CM5PSpd/football.png",
@@ -30,7 +35,7 @@ const AllProducts = () => {
     },
     {
       img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Running Shoes",
+      text: "Shoes",
     },
     {
       img: "https://i.ibb.co/0mTSw8N/swimming.png",
@@ -69,6 +74,7 @@ const AllProducts = () => {
     { name: "The North Face" },
     { name: "Patagonia" },
   ];
+
   return (
     <Container>
       <div className="py-5">
@@ -100,7 +106,7 @@ const AllProducts = () => {
             <form className="space-y-5">
               <div className="flex gap-5">
                 <Input type="number" min={0} placeholder="$Min Price" />
-                <Input type="number"min={1} placeholder="$Max Price" />
+                <Input type="number" min={1} placeholder="$Max Price" />
               </div>
 
               <div>
@@ -163,15 +169,17 @@ const AllProducts = () => {
           </div>
 
           <div className="lg:w-3/4 p-5">
-          <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-            <ProductCard/>
-          </div>
-          
-          
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error fetching products.</p>
+            ) : (
+              <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {data?.data.map((product: TProduct) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
