@@ -1,5 +1,6 @@
 import Slider from "@/components/Carousel/Slider";
 import CategoryCarouSel from "@/components/CategoryCarousel/CategoryCarouSel";
+import ContactUs from "@/components/ContactUs/ContactUs";
 import Container from "@/components/layout/Container";
 import Headline from "@/utils/Headline/Headline";
 import ProductCard from "@/utils/ProductCard/ProductCard";
@@ -21,6 +22,10 @@ const Home = () => {
         <Headline text="our categories" />
 
         <CategoryCarouSel />
+
+        <Headline text="Contact Us" />
+
+        <ContactUs/>
       </Container>
     </div>
   );
