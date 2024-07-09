@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { TCategories } from "@/components/CategoryCarousel/CategoryCarouSel";
 import { Button } from "@/components/ui/button";
+import ProductTable from "@/utils/ProductTable/ProductTable";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -195,8 +196,10 @@ const ManageProducts = () => {
             </form>
           </div>
         </TabsContent>
-        <TabsContent value="update">update products.</TabsContent>
-        <TabsContent value="delete">delete products.</TabsContent>
+        <TabsContent value="update">
+          <ProductTable table="Update" />
+        </TabsContent>
+        <TabsContent value="delete"><ProductTable table="Delete" /></TabsContent>
       </Tabs>
     </Container>
   );
