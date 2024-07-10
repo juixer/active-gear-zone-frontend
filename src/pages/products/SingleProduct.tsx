@@ -25,7 +25,7 @@ import {
   selectCurrentQuantity,
 } from "@/redux/features/cart/cartSlice";
 import { toast } from "sonner";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "@/redux/store";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -96,10 +96,21 @@ const SingleProduct = () => {
       return;
     }
 
-    dispatch(addToCart({ _id, quantity: cartNumber, price, name, image }));
+    dispatch(
+      addToCart({
+        _id,
+        quantity: cartNumber,
+        price,
+        name,
+        image,
+        stockQuantity,
+      })
+    );
     toast.success("Added to cart successfully", {
       duration: 3000,
     });
+
+    dispatch(changeCartNumberByValue(1));
   };
 
   return (
