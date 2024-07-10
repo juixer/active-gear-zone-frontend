@@ -25,6 +25,7 @@ import {
 } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
 import { useState } from "react";
+import axios from "axios";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -101,32 +102,28 @@ const ManageProducts = () => {
 
     try {
       setErrorMessages([]);
-      const imgFile = data.image[0];
 
-      if (!imgFile) {
+      if (!data.image[0]) {
         toast.error("Please provide product image", {
           id: toastId,
           duration: 3000,
         });
       }
+      const imgFile = data.image[0];
+
       const imgData = new FormData();
       imgData.append("image", imgFile);
-      const imgRes = await fetch(
-        `https://api.imgbb.com/1/upload?expiration=600&key=${
-          import.meta.env.VITE_IMGBB_API_KEY
-        }`,
+      const imgRes = await axios.post(
+        `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        imgData,
         {
-          method: "POST",
-          body: imgData,
           headers: {
-            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
-      );
+      )
 
-      const res = await imgRes.json();
-
-      if (res.success) {
+      if (imgRes?.data?.success) {
         const product = {
           name: data.name,
           description: data.description,
@@ -135,7 +132,7 @@ const ManageProducts = () => {
           stockQuantity: parseInt(data.stockQuantity),
           rating: parseInt(data.rating),
           price: parseFloat(data.price),
-          image: res.data.url,
+          image: imgRes.data.data.url,
         };
 
         const result = await addProduct(product).unwrap();
@@ -306,7 +303,7 @@ const ManageProducts = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="image">
+                  <Label className="text-lg" htmlFor="image">
                     Image<span className="text-red-500">*</span>
                   </Label>
                   <Input

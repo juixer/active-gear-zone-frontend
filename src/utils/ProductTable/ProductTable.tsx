@@ -11,6 +11,7 @@ import {
 import { TProduct } from "../ProductCard/ProductCard";
 import { useDeleteProductMutation } from "@/redux/features/product/product.api";
 import Swal from "sweetalert2";
+import UpdateModal from "@/components/updateModal/UpdateModal";
 
 type TTableContent = {
   table: string;
@@ -85,9 +86,7 @@ const ProductTable = ({ table, products }: TTableContent) => {
             <TableCell className="text-right">
               {table === "Update" && (
                 <>
-                  <Button className="bg-baseColor text-black hover:bg-lime-600">
-                    Update
-                  </Button>
+                 <UpdateModal product={product}/>
                 </>
               )}
               {table === "Delete" && (
