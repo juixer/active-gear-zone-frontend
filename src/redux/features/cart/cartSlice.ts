@@ -14,41 +14,43 @@ export type TCartItem = {
 type TInitialState = {
   cart: TCartItem[];
   cartNumber: number;
+  inCart: number;
+  subTotal: number;
 };
 
 const initialState: TInitialState = {
   cart: [],
   cartNumber: 1,
+  inCart: 0,
+  subTotal: 0,
 };
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    increment: (state, action: PayloadAction<{ _id: string, price : number}>) => {
+    increment: (
+      state,
+      action: PayloadAction<{ _id: string; price: number }>
+    ) => {
       const item = state.cart.find((item) => item._id === action.payload._id);
       if (item) {
         item.quantity++;
         item.totalPrice = (item.totalPrice as number) + action.payload.price;
-      } 
+        state.inCart++;
+      }
     },
-    decrement: (state, action: PayloadAction<{ _id: string, price : number }>) => {
+    decrement: (
+      state,
+      action: PayloadAction<{ _id: string; price: number }>
+    ) => {
       const item = state.cart.find((item) => item._id === action.payload._id);
       if (item) {
         if (item.quantity > 1) {
           item.quantity--;
           item.totalPrice = (item.totalPrice as number) - action.payload.price;
-        } 
-      }
-    },
-    changeWithValue: (
-      state,
-      action: PayloadAction<{ _id: string; quantity: number, price : number}>
-    ) => {
-      const item = state.cart.find((item) => item._id === action.payload._id);
-      if (item) {
-        item.quantity = action.payload.quantity;
-        item.totalPrice = (item.totalPrice as number) + (action.payload.price * action.payload.quantity)
+          state.inCart--;
+        }
       }
     },
     addToCart: (state, action: PayloadAction<TCartItem>) => {
@@ -62,6 +64,7 @@ export const cartSlice = createSlice({
         item.image = action.payload.image;
         item.quantity += action.payload.quantity;
         item.stockQuantity = action.payload.stockQuantity;
+        state.inCart = item.quantity;
       } else {
         state.cart.push({
           _id: action.payload._id,
@@ -73,6 +76,7 @@ export const cartSlice = createSlice({
           price: action.payload.price,
           stockQuantity: action.payload.stockQuantity,
         });
+        state.inCart = action.payload.quantity;
       }
     },
     incrementCartNumber: (state) => {
@@ -83,8 +87,11 @@ export const cartSlice = createSlice({
         state.cartNumber--;
       }
     },
-    changeCartNumberByValue: (state, action) => {
+    changeCartNumberByValue: (state, action: PayloadAction<number>) => {
       state.cartNumber = action.payload;
+    },
+    checkOut: (state, action: PayloadAction<number>) => {
+      state.subTotal = action.payload;
     },
   },
 });
@@ -92,11 +99,11 @@ export const cartSlice = createSlice({
 export const {
   increment,
   decrement,
-  changeWithValue,
   addToCart,
   incrementCartNumber,
   decrementCartNumber,
   changeCartNumberByValue,
+  checkOut,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
@@ -109,3 +116,7 @@ export const selectCurrentQuantity = (state: RootState, productId: string) => {
 export const SelectCartItems = (state: RootState) => state.cart.cart;
 
 export const selectCartNumber = (state: RootState) => state.cart.cartNumber;
+
+export const selectInCart = (state: RootState) => state.cart.inCart;
+
+export const selectSubTotal = (state: RootState) => state.cart.subTotal;

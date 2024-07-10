@@ -8,8 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useAppSelector } from "@/redux/hooks";
+import { selectInCart } from "@/redux/features/cart/cartSlice";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
+  const inCart = useAppSelector(selectInCart);
+
   const navLinks = (
     <div className="space-x-10">
       <NavLink
@@ -127,16 +132,21 @@ const Navbar = () => {
       <div className="max-w-screen-2xl mx-auto hidden lg:flex items-center justify-between">
         <div className="flex justify-start">
           <NavLink className={"text-xl"} to={"/"}>
-            <img src="https://i.ibb.co/QmkBvmg/Brimston-1.png" className="w-24"/>
+            <img
+              src="https://i.ibb.co/QmkBvmg/Brimston-1.png"
+              className="w-24"
+            />
           </NavLink>
         </div>
         <div className="flex justify-center">{navLinks}</div>
         <div className="flex justify-end">
-          <NavLink
-            className={"hover:text-baseColor duration-300 text-xl"}
-            to={"/cart"}
-          >
-            <FaCartShopping className="text-xl" />
+          <NavLink className={"text-xl flex relative"} to={"/cart"}>
+            <Button className="bg-baseColor hover:bg-lime-600 text-black">
+              <FaCartShopping className="text-3xl" />
+              <span className="text-sm absolute top-[6px] right-5 text-white">
+                {inCart}
+              </span>
+            </Button>
           </NavLink>
         </div>
       </div>

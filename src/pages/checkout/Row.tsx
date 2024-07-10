@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TableCell, TableRow } from "@/components/ui/table";
 import {
-  changeWithValue,
   decrement,
   increment,
   selectCurrentQuantity,
@@ -10,7 +9,6 @@ import {
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-import { toast } from "sonner";
 
 const Row = ({ item }: { item: TCartItem }) => {
   const dispatch = useAppDispatch();

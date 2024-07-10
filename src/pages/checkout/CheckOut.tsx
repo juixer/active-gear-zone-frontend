@@ -1,7 +1,95 @@
+import Container from "@/components/layout/Container";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Headline from "@/utils/Headline/Headline";
+import { useState } from "react";
+
 const CheckOut = () => {
-    return(
-        <div>
-             <h1> This is CheckOut Component </h1>
+
+    const [cod , setCod] = useState(false)
+    const [card , setCard] = useState(false)
+
+    const handleCodChange = () => {
+        setCod(!cod)
+    }
+    const handleCardChange = () => {
+        setCard(!card)
+    }
+
+  return (
+    <Container>
+      <div className="py-5 space-y-5">
+        <Headline text="checkout" />
+        <div className="flex justify-center items-center">
+          <form className=" space-y-5 w-full max-w-96">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-lg">
+                Name<span className="text-red-500">*</span>
+              </Label>
+              <Input placeholder="Enter your name" type="text" id="name" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-lg">
+                Email<span className="text-red-500">*</span>
+              </Label>
+              <Input placeholder="Enter your email" type="text" id="email" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-lg">
+                Phone<span className="text-red-500">*</span>
+              </Label>
+              <Input
+                placeholder="Enter your phone number"
+                type="text"
+                id="phone"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="address" className="text-lg">
+                Address<span className="text-red-500">*</span>
+              </Label>
+              <Input
+                placeholder="Enter your address"
+                type="text"
+                id="address"
+              />
+            </div>
+
+            <div className="space-y-5">
+              <div className="flex items-center">
+                <Checkbox id="cod" checked={cod} onCheckedChange={handleCodChange} disabled={card} />
+                <Label htmlFor="cod" className="ml-3">
+                  Cash on delivery
+                </Label>
+              </div>
+              <div className="flex items-center">
+                <Checkbox id="card" checked={card} onCheckedChange={handleCardChange} disabled={cod} />
+                <Label htmlFor="card" className="ml-3">
+                  Credit card
+                </Label>
+              </div>
+
+              <div>
+                {card && (
+                  <div className="space-y-2">
+                    <Label htmlFor="card_number" className="text-lg">
+                      Card Number
+                    </Label>
+                    <Input placeholder="Enter your Card number" type="text" id="card_number" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Button className="uppercase text-black bg-baseColor hover:bg-lime-600 w-full">
+              Place order
+            </Button>
+          </form>
         </div>
-    )}
+      </div>
+    </Container>
+  );
+};
 export default CheckOut;

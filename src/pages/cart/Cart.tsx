@@ -1,6 +1,6 @@
 import Container from "@/components/layout/Container";
-import {  SelectCartItems } from "@/redux/features/cart/cartSlice";
-import {  useAppSelector } from "@/redux/hooks";
+import { checkOut, SelectCartItems } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   Table,
   TableBody,
@@ -16,7 +16,15 @@ import Row from "../checkout/Row";
 
 const Cart = () => {
   const cart = useAppSelector(SelectCartItems);
-  
+  const dispatch = useAppDispatch();
+  const handleCheckOut = () => {
+    const subTotal = (
+      cart.reduce((acc, item) => (item.totalPrice as number) + acc, 0) *
+      (1 + 15 / 100)
+    ).toFixed(2);
+    dispatch(checkOut(Number(subTotal)));
+  };
+
   return (
     <Container>
       <div className="py-5 flex flex-col-reverse lg:flex-row justify-between gap-5 ">
@@ -35,7 +43,7 @@ const Cart = () => {
             </TableHeader>
             <TableBody>
               {cart.map((item) => (
-                <Row key={item._id} item={item}/>
+                <Row key={item._id} item={item} />
               ))}
             </TableBody>
           </Table>
@@ -72,7 +80,7 @@ const Cart = () => {
           </div>
 
           <div>
-            <NavLink to={"/checkout"}>
+            <NavLink onClick={handleCheckOut} to={"/checkout"}>
               <Button className="w-full bg-baseColor text-black hover:bg-lime-600">
                 Checkout
               </Button>
