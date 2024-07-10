@@ -19,7 +19,10 @@ import {
   FormProvider,
   useForm,
 } from "react-hook-form";
-import { useAddProductMutation } from "@/redux/features/product/product.api";
+import {
+  useAddProductMutation,
+  useGetProductsQuery,
+} from "@/redux/features/product/product.api";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -151,6 +154,8 @@ const ManageProducts = () => {
       });
     }
   };
+
+  const { data, isLoading } = useGetProductsQuery(undefined);
 
   return (
     <Container>
@@ -301,7 +306,9 @@ const ManageProducts = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="image">Image<span className="text-red-500">*</span></Label>
+                  <Label htmlFor="image">
+                    Image<span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     {...methods.register("image")}
                     id="image"
@@ -329,10 +336,18 @@ const ManageProducts = () => {
           </div>
         </TabsContent>
         <TabsContent value="update">
-          <ProductTable table="Update" />
+          {isLoading ? (
+            <p>Loading....</p>
+          ) : (
+            <ProductTable products={data?.data} table="Update" />
+          )}
         </TabsContent>
         <TabsContent value="delete">
-          <ProductTable table="Delete" />
+          {isLoading ? (
+            <p>Loading....</p>
+          ) : (
+            <ProductTable products={data?.data} table="Delete" />
+          )}
         </TabsContent>
       </Tabs>
     </Container>

@@ -78,17 +78,6 @@ const AllProducts = () => {
   return (
     <Container>
       <div className="py-5">
-        {/* category */}
-        <div className="flex flex-wrap gap-5 py-5">
-          {categories.map((item, index) => (
-            <div
-              key={index}
-              className="p-2 text-center border border-black rounded-xl cursor-pointer hover:bg-baseColor  duration-300"
-            >
-              <h3>{item.text}</h3>
-            </div>
-          ))}
-        </div>
 
         <div className="py-5 flex justify-center items-center gap-3">
           <Input
@@ -109,6 +98,20 @@ const AllProducts = () => {
                 <Input type="number" min={1} placeholder="$Max Price" />
               </div>
 
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((item, index) => (
+                      <SelectItem key={index} value={item.text}>
+                        {item.text}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div>
                 <Select>
                   <SelectTrigger className="w-full">
@@ -171,9 +174,7 @@ const AllProducts = () => {
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
               <p>Loading...</p>
-            ) : error ? (
-              <p>Error fetching products.</p>
-            ) : (
+            )  : (
               <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {data?.data.map((product: TProduct) => (
                   <ProductCard key={product._id} product={product} />
