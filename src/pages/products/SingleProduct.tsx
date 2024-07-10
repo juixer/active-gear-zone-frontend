@@ -22,6 +22,7 @@ import {
   increment,
   selectCurrentQuantity,
 } from "@/redux/features/cart/cartSlice";
+import { toast } from "sonner";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -30,7 +31,8 @@ const SingleProduct = () => {
   const totalQuantity = useAppSelector((state) =>
     selectCurrentQuantity(state, productId)
   );
-  console.log(totalQuantity);
+
+
   const { data, isLoading } = useGetSingleProductQuery(productId);
 
   if (isLoading) {
@@ -53,6 +55,27 @@ const SingleProduct = () => {
     rating,
     isAvailable,
   } = data.data;
+
+  const handleQuantityChange = (e) => {
+    e.preventDefault();
+    const quantity = Number(e.currentTarget.value);
+    setQuantity(quantity);
+    if (quantity > stockQuantity) {
+      toast.error("Quantity exceeds stock", {
+        duration: 3000,
+      });
+    }
+
+    dispatch(changeWithValue({ _id, quantity }));
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrement({ _id }));
+  };
+
+  const handleIncrement = () => {
+    dispatch(increment({ _id }));
+  };
 
   return (
     <Container>
@@ -90,7 +113,7 @@ const SingleProduct = () => {
             </div>
             <div className="flex gap-2">
               <Button
-                onClick={() => dispatch(decrement({ _id }))}
+                onClick={handleDecrement}
                 className="bg-white text-black border hover:bg-zinc-200"
               >
                 -
@@ -100,24 +123,18 @@ const SingleProduct = () => {
                 min={1}
                 max={stockQuantity}
                 value={totalQuantity}
-                onChange={(e) =>
-                  dispatch(
-                    changeWithValue({
-                      _id,
-                      quantity: Number(e.currentTarget.value),
-                    })
-                  )
-                }
+                onChange={handleQuantityChange}
                 className="w-14 text-center"
               />
               <Button
-                onClick={() => dispatch(increment({ _id }))}
+                disabled={totalQuantity === stockQuantity}
+                onClick={handleIncrement}
                 className="bg-white text-black border hover:bg-zinc-200"
               >
                 +
               </Button>
               <Button
-                disabled={!isAvailable}
+                disabled={!isAvailable || totalQuantity === stockQuantity}
                 className="bg-baseColor  text-black hover:bg-lime-600"
               >
                 Add to Cart
