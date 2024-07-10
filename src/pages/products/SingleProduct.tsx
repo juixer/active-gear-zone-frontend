@@ -15,10 +15,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { FaStar } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  changeWithValue,
+  decrement,
+  increment,
+  selectCurrentQuantity,
+} from "@/redux/features/cart/cartSlice";
 
 const SingleProduct = () => {
   const { productId } = useParams();
 
+  const dispatch = useAppDispatch();
+  const totalQuantity = useAppSelector((state) =>
+    selectCurrentQuantity(state, productId)
+  );
+  console.log(totalQuantity);
   const { data, isLoading } = useGetSingleProductQuery(productId);
 
   if (isLoading) {
@@ -28,6 +40,7 @@ const SingleProduct = () => {
       </Container>
     );
   }
+
   const {
     _id,
     brand,
@@ -49,7 +62,7 @@ const SingleProduct = () => {
             <PhotoView src={image}>
               <img
                 src={image}
-                className="w-96 h-96 object-cover rounded-full"
+                className="w-60 h-60 object-cover rounded-full"
               />
             </PhotoView>
           </PhotoProvider>
@@ -76,15 +89,37 @@ const SingleProduct = () => {
               </span>
             </div>
             <div className="flex gap-2">
-              <Button>-</Button>
+              <Button
+                onClick={() => dispatch(decrement({ _id }))}
+                className="bg-white text-black border hover:bg-zinc-200"
+              >
+                -
+              </Button>
               <Input
-                type="text"
+                type="number"
                 min={1}
-                defaultValue={1}
+                max={stockQuantity}
+                value={totalQuantity}
+                onChange={(e) =>
+                  dispatch(
+                    changeWithValue({
+                      _id,
+                      quantity: Number(e.currentTarget.value),
+                    })
+                  )
+                }
                 className="w-14 text-center"
               />
-              <Button>+</Button>
-              <Button className="bg-baseColor  text-black hover:bg-lime-600">
+              <Button
+                onClick={() => dispatch(increment({ _id }))}
+                className="bg-white text-black border hover:bg-zinc-200"
+              >
+                +
+              </Button>
+              <Button
+                disabled={!isAvailable}
+                className="bg-baseColor  text-black hover:bg-lime-600"
+              >
                 Add to Cart
               </Button>
             </div>
@@ -143,7 +178,9 @@ const SingleProduct = () => {
               {/* row */}
               <TableRow>
                 <TableCell className="font-semibold">Description:</TableCell>
-                <TableCell>{description}</TableCell>
+                <TableCell className="max-w-80 text-justify w-full">
+                  {description}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
