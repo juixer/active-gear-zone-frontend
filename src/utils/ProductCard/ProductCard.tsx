@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "../../components/ui/button";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 export type TProduct = {
   _id: string;
   name: string;
@@ -17,6 +18,7 @@ export type TProduct = {
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   const {
+    _id,
     brand,
     category,
     image,
@@ -64,9 +66,12 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         ) : (
           <p className="text-red-500 font-medium">Out of Stock</p>
         )}
-        <Button className="bg-baseColor text-black hover:bg-lime-600 duration-300 w-full">
-          View Details
-        </Button>
+
+        <NavLink to={`/product/${_id}`}>
+          <Button className="bg-baseColor text-black hover:bg-lime-600 duration-300 w-full">
+            View Details
+          </Button>
+        </NavLink>
       </CardContent>
     </Card>
   );

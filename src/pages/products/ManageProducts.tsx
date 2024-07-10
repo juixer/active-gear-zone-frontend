@@ -26,6 +26,7 @@ import {
 import { toast } from "sonner";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -95,6 +96,8 @@ const ManageProducts = () => {
 
   const [addProduct] = useAddProductMutation();
 
+  const navigate = useNavigate()
+
   const [errorMessages, setErrorMessages] = useState([]);
 
   const onSubmit = async (data: FieldValues) => {
@@ -136,12 +139,12 @@ const ManageProducts = () => {
         };
 
         const result = await addProduct(product).unwrap();
-        console.log(result);
-        methods.reset();
-        toast.success("Product added successfully", {
+        toast.success(`${result.message}`, {
           id: toastId,
           duration: 3000,
         });
+        navigate(`/product/${result.data._id}`)
+
       }
     } catch (error) {
       setErrorMessages(error?.data?.errorSources);

@@ -29,6 +29,7 @@ import {
 import { toast } from "sonner";
 import { useUpdateProductMutation } from "@/redux/features/product/product.api";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UpdateModal = ({ product }: { product: TProduct }) => {
   const {
@@ -107,6 +108,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
 
   const methods = useForm();
   const [updateProduct] = useUpdateProductMutation();
+  const navigate = useNavigate()
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
@@ -161,6 +163,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         id: toastId,
         duration: 3000,
       });
+      navigate(`/product/${result.data._id}`)
     } catch (error) {
       toast.error(`Something went wrong`, {
         id: toastId,
