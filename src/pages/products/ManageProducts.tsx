@@ -20,6 +20,8 @@ import {
   useForm,
 } from "react-hook-form";
 import { useAddProductMutation } from "@/redux/features/product/product.api";
+import { toast } from "sonner";
+import { useState } from "react";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -89,9 +91,21 @@ const ManageProducts = () => {
 
   const [addProduct] = useAddProductMutation();
 
+  const [errorMessages, setErrorMessages] = useState([]);
+
   const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading("Please wait...");
+
     try {
+      setErrorMessages([]);
       const imgFile = data.image[0];
+
+      if (!imgFile) {
+        toast.error("Please provide product image", {
+          id: toastId,
+          duration: 3000,
+        });
+      }
       const imgData = new FormData();
       imgData.append("image", imgFile);
       const imgRes = await fetch(
@@ -123,9 +137,18 @@ const ManageProducts = () => {
 
         const result = await addProduct(product).unwrap();
         console.log(result);
+        methods.reset();
+        toast.success("Product added successfully", {
+          id: toastId,
+          duration: 3000,
+        });
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessages(error?.data?.errorSources);
+      toast.error(`Something went wrong`, {
+        id: toastId,
+        duration: 3000,
+      });
     }
   };
 
@@ -148,7 +171,7 @@ const ManageProducts = () => {
               >
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-lg">
-                    Name
+                    Name<span className="text-red-500">*</span>
                   </Label>
                   <Input
                     placeholder="Enter Product Name"
@@ -160,7 +183,7 @@ const ManageProducts = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="description" className="text-lg">
-                    Description
+                    Description<span className="text-red-500">*</span>
                   </Label>
                   <Textarea
                     {...methods.register("description")}
@@ -171,7 +194,7 @@ const ManageProducts = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="category" className="text-lg">
-                    Category
+                    Category<span className="text-red-500">*</span>
                   </Label>
                   <Controller
                     name="category"
@@ -199,7 +222,7 @@ const ManageProducts = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="brand" className="text-lg">
-                    Brand
+                    Brand<span className="text-red-500">*</span>
                   </Label>
                   <Controller
                     name="brand"
@@ -226,7 +249,7 @@ const ManageProducts = () => {
 
                 <div>
                   <Label htmlFor="stock-quantity" className="text-lg">
-                    Stock quantity
+                    Stock quantity<span className="text-red-500">*</span>
                   </Label>
                   <Input
                     {...methods.register("stockQuantity")}
@@ -239,7 +262,7 @@ const ManageProducts = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="rating" className="text-lg">
-                    Rating
+                    Rating<span className="text-red-500">*</span>
                   </Label>
                   <Controller
                     name="rating"
@@ -266,7 +289,7 @@ const ManageProducts = () => {
 
                 <div>
                   <Label htmlFor="price" className="text-lg">
-                    Price
+                    Price<span className="text-red-500">*</span>
                   </Label>
                   <Input
                     {...methods.register("price")}
@@ -278,13 +301,25 @@ const ManageProducts = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="image">Image</Label>
+                  <Label htmlFor="image">Image<span className="text-red-500">*</span></Label>
                   <Input
                     {...methods.register("image")}
                     id="image"
                     type="file"
                   />
                 </div>
+
+                {errorMessages &&
+                  errorMessages.map((source, index) => (
+                    <div key={index}>
+                      <li className="text-red-500 text-sm">
+                        <span className="uppercase font-bold">
+                          {source?.path}
+                        </span>
+                        : {source?.message}
+                      </li>
+                    </div>
+                  ))}
 
                 <Button className="bg-baseColor text-black w-full hover:bg-lime-600">
                   Add Product
