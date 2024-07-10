@@ -2,21 +2,57 @@ import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { TProduct } from "../ProductCard/ProductCard";
+import { useDeleteProductMutation } from "@/redux/features/product/product.api";
+import Swal from "sweetalert2";
 
 type TTableContent = {
   table: string;
-  product: TProduct[];
+  products: TProduct[];
 };
 
 const ProductTable = ({ table, products }: TTableContent) => {
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleProductDelete = async (productId: string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await deleteProduct(productId).unwrap();
+        console.log(res);
+        Swal.fire({
+          title: "Deleted!",
+          text: `${res.message}`,
+          icon: "success",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    }
+  };
+
   return (
     <Table className="py-5">
+      <TableCaption>{table} your products</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
@@ -31,7 +67,7 @@ const ProductTable = ({ table, products }: TTableContent) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.map((product) => (
+        {products.map((product: TProduct) => (
           <TableRow key={product._id}>
             <TableCell className="font-medium">{product.name}</TableCell>
             <TableCell>{product.brand}</TableCell>
@@ -56,7 +92,10 @@ const ProductTable = ({ table, products }: TTableContent) => {
               )}
               {table === "Delete" && (
                 <>
-                  <Button className="bg-red-500 text-white hover:bg-red-400">
+                  <Button
+                    onClick={() => handleProductDelete(product._id)}
+                    className="bg-red-500 text-white hover:bg-red-400"
+                  >
                     Delete
                   </Button>
                 </>

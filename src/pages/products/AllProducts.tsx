@@ -16,7 +16,7 @@ import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/redux/features/product/product.api";
 
 const AllProducts = () => {
-  const { isLoading, error, data } = useGetProductsQuery(undefined, {
+  const { isLoading, data } = useGetProductsQuery(undefined, {
     pollingInterval: 30000,
     skipPollingIfUnfocused: true,
   });
