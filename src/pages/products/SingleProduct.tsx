@@ -17,21 +17,24 @@ import {
 import { FaStar } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
-  changeWithValue,
-  decrement,
-  increment,
+  addToCart,
+  changeCartNumberByValue,
+  decrementCartNumber,
+  incrementCartNumber,
+  selectCartNumber,
   selectCurrentQuantity,
 } from "@/redux/features/cart/cartSlice";
 import { toast } from "sonner";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const SingleProduct = () => {
   const { productId } = useParams();
 
   const dispatch = useAppDispatch();
-  const totalQuantity = useAppSelector((state) =>
+  const cartNumber = useAppSelector(selectCartNumber);
+  const totalQuantity = useAppSelector((state: RootState) =>
     selectCurrentQuantity(state, productId)
   );
-
 
   const { data, isLoading } = useGetSingleProductQuery(productId);
 
@@ -59,22 +62,44 @@ const SingleProduct = () => {
   const handleQuantityChange = (e) => {
     e.preventDefault();
     const quantity = Number(e.currentTarget.value);
-    setQuantity(quantity);
     if (quantity > stockQuantity) {
       toast.error("Quantity exceeds stock", {
         duration: 3000,
       });
     }
 
-    dispatch(changeWithValue({ _id, quantity }));
+    dispatch(changeCartNumberByValue(quantity));
   };
 
   const handleDecrement = () => {
-    dispatch(decrement({ _id }));
+    if (cartNumber > 1) {
+      dispatch(decrementCartNumber());
+    }
   };
 
   const handleIncrement = () => {
-    dispatch(increment({ _id }));
+    if (cartNumber < stockQuantity) {
+      dispatch(incrementCartNumber());
+    } else {
+      toast.error("Quantity exceeds stock", {
+        duration: 3000,
+      });
+    }
+  };
+
+  const handelAddToCart = () => {
+    const total = totalQuantity + cartNumber;
+    if (total > stockQuantity) {
+      toast.error("Cannot add more items than available in stock", {
+        duration: 3000,
+      });
+      return;
+    }
+
+    dispatch(addToCart({ _id, quantity: cartNumber, price, name, image }));
+    toast.success("Added to cart successfully", {
+      duration: 3000,
+    });
   };
 
   return (
@@ -122,19 +147,22 @@ const SingleProduct = () => {
                 type="number"
                 min={1}
                 max={stockQuantity}
-                value={totalQuantity}
+                value={cartNumber}
                 onChange={handleQuantityChange}
                 className="w-14 text-center"
               />
               <Button
-                disabled={totalQuantity === stockQuantity}
+                disabled={
+                  cartNumber === stockQuantity || cartNumber > stockQuantity
+                }
                 onClick={handleIncrement}
                 className="bg-white text-black border hover:bg-zinc-200"
               >
                 +
               </Button>
               <Button
-                disabled={!isAvailable || totalQuantity === stockQuantity}
+                disabled={!isAvailable || cartNumber > stockQuantity}
+                onClick={handelAddToCart}
                 className="bg-baseColor  text-black hover:bg-lime-600"
               >
                 Add to Cart
