@@ -13,6 +13,13 @@ import {
 import { TCategories } from "@/components/CategoryCarousel/CategoryCarouSel";
 import { Button } from "@/components/ui/button";
 import ProductTable from "@/utils/ProductTable/ProductTable";
+import {
+  Controller,
+  FieldValues,
+  FormProvider,
+  useForm,
+} from "react-hook-form";
+import { useAddProductMutation } from "@/redux/features/product/product.api";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -77,6 +84,51 @@ const ManageProducts = () => {
     { star: "4" },
     { star: "5" },
   ];
+
+  const methods = useForm();
+
+  const [addProduct] = useAddProductMutation();
+
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const imgFile = data.image[0];
+      const imgData = new FormData();
+      imgData.append("image", imgFile);
+      const imgRes = await fetch(
+        `https://api.imgbb.com/1/upload?expiration=600&key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
+        {
+          method: "POST",
+          body: imgData,
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const res = await imgRes.json();
+
+      if (res.success) {
+        const product = {
+          name: data.name,
+          description: data.description,
+          category: data.category,
+          brand: data.brand,
+          stockQuantity: parseInt(data.stockQuantity),
+          rating: parseInt(data.rating),
+          price: parseFloat(data.price),
+          image: res.data.url,
+        };
+
+        const result = await addProduct(product).unwrap();
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <Tabs defaultValue="add" className="py-5 w-full">
@@ -89,111 +141,156 @@ const ManageProducts = () => {
         </div>
         <TabsContent value="add">
           <div className="max-w-96 mx-auto">
-            <form className="space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-lg">
-                  Name
-                </Label>
-                <Input placeholder="Enter Product Name" type="text" id="name" />
-              </div>
+            <FormProvider {...methods}>
+              <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className="space-y-5"
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-lg">
+                    Name
+                  </Label>
+                  <Input
+                    placeholder="Enter Product Name"
+                    {...methods.register("name")}
+                    type="text"
+                    id="name"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="description" className="text-lg">
-                  Description
-                </Label>
-                <Textarea
-                  placeholder="Enter Product Description"
-                  id="description"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-lg">
+                    Description
+                  </Label>
+                  <Textarea
+                    {...methods.register("description")}
+                    placeholder="Enter Product Description"
+                    id="description"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="category" className="text-lg">
-                  Category
-                </Label>
-                <Select>
-                  <SelectTrigger className="">
-                    <SelectValue placeholder="Select Product Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((item, index) => (
-                      <SelectItem key={index} value={item.text}>
-                        {item.text}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="category" className="text-lg">
+                    Category
+                  </Label>
+                  <Controller
+                    name="category"
+                    control={methods.control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Product Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((item, index) => (
+                            <SelectItem key={index} value={item.text}>
+                              {item.text}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="brand" className="text-lg">
-                  Brand
-                </Label>
-                <Select>
-                  <SelectTrigger className="">
-                    <SelectValue placeholder=" Select Product Brand" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sportsGoodsBrands.map((item, index) => (
-                      <SelectItem key={index} value={item.name}>
-                        {item.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="brand" className="text-lg">
+                    Brand
+                  </Label>
+                  <Controller
+                    name="brand"
+                    control={methods.control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder=" Select Product Brand" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {sportsGoodsBrands.map((item, index) => (
+                            <SelectItem key={index} value={item.name}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="stock-quantity" className="text-lg">
-                  Stock quantity
-                </Label>
-                <Input
-                  placeholder="Enter Product Quantity"
-                  type="number"
-                  min={0}
-                  id="stock-quantity"
-                />
-              </div>
+                <div>
+                  <Label htmlFor="stock-quantity" className="text-lg">
+                    Stock quantity
+                  </Label>
+                  <Input
+                    {...methods.register("stockQuantity")}
+                    placeholder="Enter Product Quantity"
+                    type="number"
+                    min={0}
+                    id="stock-quantity"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="rating" className="text-lg">
-                  Rating
-                </Label>
-                <Select>
-                  <SelectTrigger className="">
-                    <SelectValue placeholder="Select Product Rating" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {rating.map((item, index) => (
-                      <SelectItem key={index} value={item.star}>
-                        {item.star} Star
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="rating" className="text-lg">
+                    Rating
+                  </Label>
+                  <Controller
+                    name="rating"
+                    control={methods.control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Product Rating" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {rating.map((item, index) => (
+                            <SelectItem key={index} value={item.star}>
+                              {item.star} Star
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="price" className="text-lg">
-                  Price
-                </Label>
-                <Input
-                  placeholder="Enter Product Price"
-                  type="number"
-                  min={1}
-                  id="price"
-                />
-              </div>
+                <div>
+                  <Label htmlFor="price" className="text-lg">
+                    Price
+                  </Label>
+                  <Input
+                    {...methods.register("price")}
+                    placeholder="Enter Product Price"
+                    type="number"
+                    min={1}
+                    id="price"
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="image">Image</Label>
-                <Input id="image" type="file" />
-              </div>
+                <div>
+                  <Label htmlFor="image">Image</Label>
+                  <Input
+                    {...methods.register("image")}
+                    id="image"
+                    type="file"
+                  />
+                </div>
 
-              <Button className="bg-baseColor text-black w-full hover:bg-lime-600">
-                Add Product
-              </Button>
-            </form>
+                <Button className="bg-baseColor text-black w-full hover:bg-lime-600">
+                  Add Product
+                </Button>
+              </form>
+            </FormProvider>
           </div>
         </TabsContent>
         <TabsContent value="update">

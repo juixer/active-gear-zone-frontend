@@ -44,30 +44,26 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           />
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3 flex-grow flex flex-col">
+      <CardContent className="space-y-3 w-full">
         <p className="font-semibold text-xl">{name}</p>
 
-        <div className="flex justify-between gap-8">
-          <p>
-            Category: <span className="font-medium">{category}</span>
-          </p>
-          <p>
-            Brand: <span className="font-medium">{brand}</span>
-          </p>
-        </div>
-        <div className="flex justify-between gap-5">
-          {isAvailable ? (
-            <p>
-              In-Stock: <span className="font-medium">{stockQuantity}</span>
-            </p>
-          ) : (
-            <p className="text-red-500 font-medium">Out of Stock</p>
-          )}
+        <p>
+          Category: <span className="font-medium">{category}</span>
+        </p>
+        <p>
+          Brand: <span className="font-medium">{brand}</span>
+        </p>
+        <p>
+          Price: <span className="font-medium">${price}</span>
+        </p>
 
+        {isAvailable ? (
           <p>
-            Price: <span className="font-medium">${price}</span>
+            In-Stock: <span className="font-medium">{stockQuantity}</span>
           </p>
-        </div>
+        ) : (
+          <p className="text-red-500 font-medium">Out of Stock</p>
+        )}
         <Button className="bg-baseColor text-black hover:bg-lime-600 duration-300 w-full">
           View Details
         </Button>

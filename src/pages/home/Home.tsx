@@ -3,8 +3,6 @@ import CategoryCarouSel from "@/components/CategoryCarousel/CategoryCarouSel";
 import ContactUs from "@/components/ContactUs/ContactUs";
 import Container from "@/components/layout/Container";
 import Headline from "@/utils/Headline/Headline";
-import ProductCard from "@/utils/ProductCard/ProductCard";
-
 const Home = () => {
   return (
     <div>
@@ -12,12 +10,7 @@ const Home = () => {
         <Slider />
         <Headline text="latest product" />
 
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 py-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </div>
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 py-5"></div>
 
         <Headline text="our categories" />
 
