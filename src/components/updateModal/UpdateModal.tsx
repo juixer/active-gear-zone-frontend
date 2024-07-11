@@ -108,7 +108,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
 
   const methods = useForm();
   const [updateProduct] = useUpdateProductMutation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
@@ -133,17 +133,26 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         const imgData = new FormData();
         imgData.append("image", imgFile);
         const imgRes = await axios.post(
-          `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+          `https://api.imgbb.com/1/upload?expiration=600&key=${
+            import.meta.env.VITE_IMGBB_API_KEY
+          }`,
           imgData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           }
-        )
+        );
 
         updateProductInfo = {
-          ...updateProductInfo,
+          name: data.name,
+          description: data.description,
+          category: data.category,
+          brand: data.brand,
+          stockQuantity: parseInt(data.stockQuantity),
+          rating: parseInt(data.rating),
+          price: parseFloat(data.price),
+          isAvailable: stockQuantity > 0 ? true : false,
           image: imgRes.data.data.url,
         };
       }
@@ -158,7 +167,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         id: toastId,
         duration: 3000,
       });
-      navigate(`/product/${result.data._id}`)
+      navigate(`/product/${result.data._id}`);
     } catch (error) {
       toast.error(`Something went wrong`, {
         id: toastId,

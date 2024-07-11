@@ -68,7 +68,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         )}
 
         <NavLink to={`/product/${_id}`}>
-          <Button className="bg-baseColor text-black hover:bg-lime-600 duration-300 w-full">
+          <Button className="bg-baseColor  mt-2 text-black hover:bg-lime-600 duration-300 w-full">
             View Details
           </Button>
         </NavLink>

@@ -39,7 +39,7 @@ const SingleProduct = () => {
   );
 
   const { data, isLoading } = useGetSingleProductQuery(productId, {
-    pollingInterval: 10000,
+    pollingInterval: 3000,
     skipPollingIfUnfocused: true,
   });
 

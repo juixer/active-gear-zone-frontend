@@ -24,8 +24,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
 import LoadingAni from "@/utils/LoadingAni/LoadingAni";
-
-
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +39,8 @@ const AllProducts = () => {
   const [rating, setRating] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
+  const [totalPage, setTotalPage] = useState(0);
+  const [page, setPage] = useState(0);
 
   const categoryParams = searchParams.get("category");
   useEffect(() => {
@@ -50,6 +56,8 @@ const AllProducts = () => {
     category,
     brand,
     rating,
+    page,
+    limit: 9,
   };
 
   const onSubmit = (data: FieldValues) => {
@@ -72,6 +80,14 @@ const AllProducts = () => {
     pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
+
+  useEffect(() => {
+    if (data) {
+      const totalData = data?.data?.totalCount;
+      const perPage = Math.ceil(totalData / 9);
+      setTotalPage(perPage);
+    }
+  }, [data]);
 
   const categories: TCategories[] = [
     {
@@ -131,6 +147,17 @@ const AllProducts = () => {
     { name: "The North Face" },
     { name: "Patagonia" },
   ];
+
+  const totalButtons = [];
+  for (let i = 0; i < totalPage; i++) {
+    totalButtons.push(
+      <PaginationLink key={i} onClick={() => setPage(i)}>
+        <Button className="bg-baseColor text-black hover:bg-lime-600">
+          {i + 1}
+        </Button>
+      </PaginationLink>
+    );
+  }
 
   return (
     <Container>
@@ -314,18 +341,49 @@ const AllProducts = () => {
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
               <LoadingAni />
-            ) : error?.status  === 404 ? (
+            ) : error?.status === 404 ? (
               <div className="flex justify-center items-center flex-col">
-                <img src="https://i.ibb.co/9qzbtQF/11329060.png"/>
-                <h1 className="text-3xl font-semibold text-center">Sorry {category} is not available</h1>
+                <img src="https://i.ibb.co/9qzbtQF/11329060.png" />
+                <h1 className="text-3xl font-semibold text-center">
+                  Sorry {category} is not available
+                </h1>
               </div>
             ) : (
               <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                {data?.data.map((product: TProduct) => (
+                {data?.data?.result.map((product: TProduct) => (
                   <ProductCard key={product._id} product={product} />
                 ))}
               </div>
             )}
+            <div className="flex justify-center items-center gap-5 my-10">
+              <div className="flex justify-center gap-5 items-center mt-10">
+                <Pagination>
+                  <PaginationContent className="space-x-3">
+                    <PaginationItem className="">
+                      <Button
+                        className="bg-baseColor text-black hover:bg-lime-600"
+                        disabled={page === 0}
+                        onClick={() => setPage(page - 1)}
+                      >
+                        Prev
+                      </Button>
+                    </PaginationItem>
+                    <PaginationItem className="space-x-3">
+                      {totalButtons}
+                    </PaginationItem>
+                    <PaginationItem className="">
+                      <Button
+                        className="bg-baseColor text-black hover:bg-lime-600"
+                        disabled={page === totalPage - 1}
+                        onClick={() => setPage(page + 1)}
+                      >
+                        Next
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            </div>
           </div>
         </div>
       </div>

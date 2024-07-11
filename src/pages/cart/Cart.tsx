@@ -67,7 +67,7 @@ const Cart = () => {
             <p>Subtotal</p>
 
             <p className="font-semibold">
-              {cart.reduce((acc, item) => (item.totalPrice as number) + acc, 0)}
+              ${cart.reduce((acc, item) => (item.totalPrice as number) + acc, 0)}
             </p>
           </div>
           <hr />
@@ -81,7 +81,7 @@ const Cart = () => {
             <p>Total</p>
 
             <p className="font-semibold">
-              {(
+             ${(
                 cart.reduce(
                   (acc, item) => (item.totalPrice as number) + acc,
                   0

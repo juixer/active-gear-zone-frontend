@@ -4,7 +4,7 @@ const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (query) => ({
-        url: `/products/filter?searchTerm=${query.searchTerm}&sort=${query.sort}&category=${query.category}&brand=${query.brand}&rating=${query.rating}`,
+        url: `/products/filter?searchTerm=${query.searchTerm}&sort=${query.sort}&category=${query.category}&brand=${query.brand}&rating=${query.rating}&page=${query.page}&limit=${query.limit}`,
         method: "GET",
       }),
       providesTags: ["product"],
