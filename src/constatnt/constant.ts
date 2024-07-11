@@ -84,9 +84,4 @@ export const brands: TBrands[] = [
   { name: "Puma" },
   { name: "Under Armour" },
   { name: "Reebok" },
-  { name: "Asics" },
-  { name: "New Balance" },
-  { name: "Columbia Sportswear" },
-  { name: "The North Face" },
-  { name: "Patagonia" },
 ];

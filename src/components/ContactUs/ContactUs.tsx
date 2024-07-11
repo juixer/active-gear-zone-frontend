@@ -14,8 +14,8 @@ const ContactUs = () => {
 
     if (form.current) {
       emailjs
-        .sendForm(`${import.meta.env.VITE_SERVICE_ID}`, `${import.meta.env.VITE_TAMP_ID}`, form.current, {
-          publicKey: `${import.meta.env.VITE_PUBLIC_KEY}`,
+        .sendForm('service_2qjsz3l', 'template_2trtxm6', form.current, {
+          publicKey: 'NBJyE0fwy8IYJVc1o',
         })
         .then(
           () => {
