@@ -5,13 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useConfirmOrderMutation } from "@/redux/features/cart/cartApi";
 import {
+  clearCart,
   SelectCartItems,
   selectSubTotal,
 } from "@/redux/features/cart/cartSlice";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Headline from "@/utils/Headline/Headline";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const CheckOut = () => {
@@ -20,6 +22,8 @@ const CheckOut = () => {
   const subTotal = useAppSelector(selectSubTotal);
   const cart = useAppSelector(SelectCartItems);
   const [confirmOrder] = useConfirmOrderMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleCodChange = () => {
     setCod(!cod);
@@ -47,14 +51,15 @@ const CheckOut = () => {
       };
 
       const result = await confirmOrder(orderInfo).unwrap();
-      toast.success("Order placed successfully", {
+      toast.success(`${result.message}`, {
         id: toastId,
-        duration: 4000,
+        duration: 3000,
       });
-      console.log(result);
+      dispatch(clearCart());
+      navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error("Something Went Wrong", { id: toastId, duration: 4000 });
+      toast.error("Something Went Wrong", { id: toastId, duration: 3000 });
     }
   };
 

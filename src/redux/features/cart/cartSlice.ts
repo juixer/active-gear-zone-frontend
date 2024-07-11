@@ -93,10 +93,19 @@ export const cartSlice = createSlice({
     checkOut: (state, action: PayloadAction<number>) => {
       state.subTotal = action.payload;
     },
-    removeProduct: (state, action : PayloadAction<{_id: string, quantity: number}>) => {
-      state.cart = state.cart.filter((item) => item._id !== action.payload._id)
+    removeProduct: (
+      state,
+      action: PayloadAction<{ _id: string; quantity: number }>
+    ) => {
+      state.cart = state.cart.filter((item) => item._id !== action.payload._id);
       state.inCart -= action.payload.quantity;
-    }
+    },
+    clearCart: (state) => {
+      state.cart = [];
+      state.cartNumber = 0;
+      state.inCart = 0;
+      state.subTotal = 0;
+    },
   },
 });
 
@@ -108,7 +117,8 @@ export const {
   decrementCartNumber,
   changeCartNumberByValue,
   checkOut,
-  removeProduct
+  removeProduct,
+  clearCart
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

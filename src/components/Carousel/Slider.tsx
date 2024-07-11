@@ -31,16 +31,14 @@ const Slider = () => {
       className="w-full py-5"
       plugins={[
         Autoplay({
-          delay: 4000,
+          delay: 3000,
         }),
       ]}
       opts={{ align: "start", loop: true }}
     >
       <CarouselContent>
         {items.map((item, index) => (
-          <CarouselItem
-            key={index}
-          >
+          <CarouselItem key={index}>
             <div className="p-1 relative">
               <div className="md:top-[35%] top-[10%] left-[10%] absolute">
                 <h1 className="md:text-5xl text-white font-semibold max-w-48 md:max-w-96 mb-3">

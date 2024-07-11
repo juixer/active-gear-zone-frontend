@@ -20,9 +20,9 @@ const Row = ({ item }: { item: TCartItem }) => {
   );
 
   const handleCartDelete = () => {
-    dispatch(removeProduct({_id:productId , quantity: totalQuantity}))
-    toast.success("Product removed from cart");
-  }
+    dispatch(removeProduct({ _id: productId, quantity: totalQuantity }));
+    toast.success("Product removed from cart", { duration: 3000 });
+  };
   return (
     <TableRow key={item._id} className="font-medium">
       <TableCell>
@@ -71,7 +71,12 @@ const Row = ({ item }: { item: TCartItem }) => {
       </TableCell>
       <TableCell className="text-right">${item.totalPrice}</TableCell>
       <TableCell className="text-right">
-        <Button onClick={handleCartDelete} className="bg-red-500 hover:bg-red-400 duration-300">Delete</Button>
+        <Button
+          onClick={handleCartDelete}
+          className="bg-red-500 hover:bg-red-400 duration-300"
+        >
+          Delete
+        </Button>
       </TableCell>
     </TableRow>
   );
