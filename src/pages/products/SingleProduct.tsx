@@ -36,7 +36,10 @@ const SingleProduct = () => {
     selectCurrentQuantity(state, productId)
   );
 
-  const { data, isLoading } = useGetSingleProductQuery(productId);
+  const { data, isLoading } = useGetSingleProductQuery(productId,{
+    pollingInterval: 10000,
+    skipPollingIfUnfocused: true,
+  });
 
   if (isLoading) {
     return (

@@ -6,7 +6,11 @@ import { useGetLatestProductQuery } from "@/redux/features/product/product.api";
 import Headline from "@/utils/Headline/Headline";
 import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 const Home = () => {
-  const { isLoading, data } = useGetLatestProductQuery(undefined);
+  
+  const { isLoading, data } = useGetLatestProductQuery(undefined, {
+    pollingInterval: 10000,
+    skipPollingIfUnfocused: true,
+  });
 
   return (
     <div>

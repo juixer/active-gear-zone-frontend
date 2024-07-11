@@ -14,10 +14,46 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FaStar } from "react-icons/fa6";
 import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/redux/features/product/product.api";
+import {
+  Controller,
+  FieldValues,
+  FormProvider,
+  useForm,
+} from "react-hook-form";
+import Headline from "@/utils/Headline/Headline";
+import { useState } from "react";
 
 const AllProducts = () => {
-  const { isLoading, data } = useGetProductsQuery(undefined, {
-    pollingInterval: 30000,
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sort, setSort] = useState("");
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [rating, setRating] = useState("");
+
+  const methods = useForm();
+  const query = {
+    searchTerm,
+    sort,
+    category,
+    brand,
+    rating,
+  };
+
+  const onSubmit = (data: FieldValues) => {
+    const searchTerm = data.searchTerm;
+    const sort = data.sort;
+    const category = data.category;
+    const brand = data.brand;
+    const rating = data.rating;
+    setSearchTerm(searchTerm);
+    setSort(sort);
+    setCategory(category);
+    setBrand(brand);
+    setRating(rating);
+  };
+
+  const { isLoading, data } = useGetProductsQuery(query, {
+    pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
   const categories: TCategories[] = [
@@ -78,103 +114,171 @@ const AllProducts = () => {
   return (
     <Container>
       <div className="py-5">
-
-        <div className="py-5 flex justify-center items-center gap-3">
-          <Input
-            type="text"
-            className="max-w-96 "
-            placeholder="Search product by name"
-          />
-          <Button className="bg-baseColor hover:bg-lime-600 text-black">
-            Search
-          </Button>
-        </div>
-
+        <div className="py-5 flex justify-center items-center gap-3"></div>
+        <Headline text="Our Products" />
         <div className="flex flex-col lg:flex-row gap-5 py-5">
           <div className="lg:w-1/4  p-5">
-            <form className="space-y-5">
-              <div className="flex gap-5">
-                <Input type="number" min={0} placeholder="$Min Price" />
-                <Input type="number" min={1} placeholder="$Max Price" />
-              </div>
+            <FormProvider {...methods}>
+              <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className="space-y-5"
+              >
+                <div className="flex  gap-5 w-full justify-center items-center">
+                  <Input
+                    {...methods.register("searchTerm")}
+                    type="text"
+                    placeholder="Search product by name"
+                  />
+                </div>
+                <div>
+                  <Controller
+                    name="sort"
+                    control={methods.control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Sort" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="price">
+                            Price (low to high)
+                          </SelectItem>
+                          <SelectItem value="-price">
+                            Price (high to low)
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+                <div>
+                  <Controller
+                    name="category"
+                    control={methods.control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Product Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((item, index) => (
+                            <SelectItem key={index} value={item.text}>
+                              {item.text}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+                <div>
+                  <Controller
+                    name="brand"
+                    defaultValue=""
+                    control={methods.control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder=" Select Product Brand" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {sportsGoodsBrands.map((item, index) => (
+                            <SelectItem key={index} value={item.name}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
 
-              <div>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((item, index) => (
-                      <SelectItem key={index} value={item.text}>
-                        {item.text}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Brand" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sportsGoodsBrands.map((brand, index) => (
-                      <SelectItem key={index} value={brand.name}>
-                        {brand.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <div>
+                  <Controller
+                    name="rating"
+                    defaultValue=""
+                    control={methods.control}
+                    render={({ field }) => (
+                      <RadioGroup
+                        className="flex justify-center gap-2"
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="1" id="1" />
+                          <Label
+                            htmlFor="1"
+                            className="flex items-center gap-1"
+                          >
+                            1 <FaStar className="text-orange-400" />
+                          </Label>
+                        </div>
 
-              <div>
-                <RadioGroup className="flex justify-center gap-2">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1" id="1" />
-                    <Label htmlFor="1" className="flex items-center gap-1">
-                      1 <FaStar className="text-orange-400" />
-                    </Label>
-                  </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="2" id="2" />
+                          <Label
+                            htmlFor="2"
+                            className="flex items-center gap-1"
+                          >
+                            2 <FaStar className="text-orange-400" />
+                          </Label>
+                        </div>
 
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="2" id="2" />
-                    <Label htmlFor="2" className="flex items-center gap-1">
-                      2 <FaStar className="text-orange-400" />
-                    </Label>
-                  </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="3" id="3" />
+                          <Label
+                            htmlFor="3"
+                            className="flex items-center gap-1"
+                          >
+                            3 <FaStar className="text-orange-400" />
+                          </Label>
+                        </div>
 
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="3" id="3" />
-                    <Label htmlFor="3" className="flex items-center gap-1">
-                      3 <FaStar className="text-orange-400" />
-                    </Label>
-                  </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="4" id="4" />
+                          <Label
+                            htmlFor="4"
+                            className="flex items-center gap-1"
+                          >
+                            4 <FaStar className="text-orange-400" />
+                          </Label>
+                        </div>
 
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="4" id="4" />
-                    <Label htmlFor="4" className="flex items-center gap-1">
-                      4 <FaStar className="text-orange-400" />
-                    </Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="5" id="5" />
-                    <Label htmlFor="5" className="flex items-center gap-1">
-                      5 <FaStar className="text-orange-400" />
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-              <Button className="bg-baseColor hover:bg-lime-600 text-black w-full">
-                Filter Products
-              </Button>
-            </form>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="5" id="5" />
+                          <Label
+                            htmlFor="5"
+                            className="flex items-center gap-1"
+                          >
+                            5 <FaStar className="text-orange-400" />
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    )}
+                  />
+                </div>
+                <Button className="bg-baseColor hover:bg-lime-600 text-black w-full">
+                  Filter Products
+                </Button>
+              </form>
+            </FormProvider>
           </div>
 
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
               <p>Loading...</p>
-            )  : (
+            ) : (
               <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {data?.data.map((product: TProduct) => (
                   <ProductCard key={product._id} product={product} />
