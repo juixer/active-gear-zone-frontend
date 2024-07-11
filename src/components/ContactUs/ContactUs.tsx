@@ -5,7 +5,7 @@ import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 import { toast } from "sonner";
 const ContactUs = () => {
-  const form = useRef();
+  const form = useRef<HTMLFormElement | null>(null);
 
   const sendEmail = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,13 +14,13 @@ const ContactUs = () => {
 
     if (form.current) {
       emailjs
-        .sendForm('service_2qjsz3l', 'template_2trtxm6', form.current, {
-          publicKey: 'NBJyE0fwy8IYJVc1o',
+        .sendForm(`${import.meta.env.VITE_SERVICE_ID}`, `${import.meta.env.VITE_TAMP_ID}`, form.current, {
+          publicKey: `${import.meta.env.VITE_PUBLIC_KEY}`,
         })
         .then(
           () => {
             toast.success("Mail sent!", { id: toastId, duration: 4000 });
-            e.target.reset();
+            location.reload();
           },
           (error) => {
             console.log("FAILED...", error);

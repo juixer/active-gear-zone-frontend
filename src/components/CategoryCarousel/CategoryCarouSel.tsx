@@ -6,55 +6,13 @@ import {
 import { NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import Autoplay from "embla-carousel-autoplay";
+import { categories } from "@/constatnt/constant";
 
-export type TCategories = {
-  img: string;
-  text: string;
-};
+
 
 const CategoryCarouSel = () => {
-  const categories: TCategories[] = [
-    {
-      img: "https://i.ibb.co/CM5PSpd/football.png",
-      text: "Football",
-    },
-    {
-      img: "https://i.ibb.co/LrjPhGh/basketball.png",
-      text: "Basketball",
-    },
-    {
-      img: "https://i.ibb.co/njsYyQf/tennis.png",
-      text: "Tennis",
-    },
-    {
-      img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Shoes",
-    },
-    {
-      img: "https://i.ibb.co/0mTSw8N/swimming.png",
-      text: "Swimming",
-    },
-    {
-      img: "https://i.ibb.co/hDsNwCf/gym.png",
-      text: "Gym",
-    },
-    {
-      img: "https://i.ibb.co/zmQDWkZ/boxing.png",
-      text: "Boxing",
-    },
-    {
-      img: "https://i.ibb.co/RN0FVDR/cycling.png",
-      text: "Cycling",
-    },
-    {
-      img: "https://i.ibb.co/4Zd5YMK/golf.png",
-      text: "Golf",
-    },
-    {
-      img: "https://i.ibb.co/RvNv1x4/volleyball.png",
-      text: "Volleyball",
-    },
-  ];
+
+  
   return (
     <Carousel
       className="w-full py-5"

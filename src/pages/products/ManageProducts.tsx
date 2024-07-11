@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TCategories } from "@/components/CategoryCarousel/CategoryCarouSel";
 import { Button } from "@/components/ui/button";
 import ProductTable from "@/utils/ProductTable/ProductTable";
 import {
@@ -24,67 +23,14 @@ import {
   useGetAllProductsQuery,
 } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
-import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
 import LoadingAni from "@/utils/LoadingAni/LoadingAni";
+import { brands, categories } from "@/constatnt/constant";
 
 const ManageProducts = () => {
-  const categories: TCategories[] = [
-    {
-      img: "https://i.ibb.co/CM5PSpd/football.png",
-      text: "Football",
-    },
-    {
-      img: "https://i.ibb.co/LrjPhGh/basketball.png",
-      text: "Basketball",
-    },
-    {
-      img: "https://i.ibb.co/njsYyQf/tennis.png",
-      text: "Tennis",
-    },
-    {
-      img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Shoes",
-    },
-    {
-      img: "https://i.ibb.co/0mTSw8N/swimming.png",
-      text: "Swimming",
-    },
-    {
-      img: "https://i.ibb.co/hDsNwCf/gym.png",
-      text: "Gym",
-    },
-    {
-      img: "https://i.ibb.co/zmQDWkZ/boxing.png",
-      text: "Boxing",
-    },
-    {
-      img: "https://i.ibb.co/RN0FVDR/cycling.png",
-      text: "Cycling",
-    },
-    {
-      img: "https://i.ibb.co/4Zd5YMK/golf.png",
-      text: "Golf",
-    },
-    {
-      img: "https://i.ibb.co/RvNv1x4/volleyball.png",
-      text: "Volleyball",
-    },
-  ];
-  const sportsGoodsBrands = [
-    { name: "Nike" },
-    { name: "Adidas" },
-    { name: "Puma" },
-    { name: "Under Armour" },
-    { name: "Reebok" },
-    { name: "Asics" },
-    { name: "New Balance" },
-    { name: "Columbia Sportswear" },
-    { name: "The North Face" },
-    { name: "Patagonia" },
-  ];
+
 
   const rating = [
     { star: "1" },
@@ -100,13 +46,10 @@ const ManageProducts = () => {
 
   const navigate = useNavigate();
 
-  const [errorMessages, setErrorMessages] = useState([]);
-
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
 
     try {
-      setErrorMessages([]);
 
       if (!data.image[0]) {
         toast.error("Please provide product image", {
@@ -150,7 +93,6 @@ const ManageProducts = () => {
         navigate(`/product/${result.data._id}`);
       }
     } catch (error) {
-      setErrorMessages(error?.data?.errorSources);
       toast.error(`Something went wrong`, {
         id: toastId,
         duration: 3000,
@@ -158,7 +100,7 @@ const ManageProducts = () => {
     }
   };
 
-  const { data, isLoading, error } = useGetAllProductsQuery(undefined, {
+  const { data, isLoading } = useGetAllProductsQuery(undefined, {
     pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
@@ -247,7 +189,7 @@ const ManageProducts = () => {
                           <SelectValue placeholder=" Select Product Brand" />
                         </SelectTrigger>
                         <SelectContent>
-                          {sportsGoodsBrands.map((item, index) => (
+                          {brands.map((item, index) => (
                             <SelectItem key={index} value={item.name}>
                               {item.name}
                             </SelectItem>
@@ -322,17 +264,6 @@ const ManageProducts = () => {
                   />
                 </div>
 
-                {errorMessages &&
-                  errorMessages.map((source, index) => (
-                    <div key={index}>
-                      <li className="text-red-500 text-sm">
-                        <span className="uppercase font-bold">
-                          {source?.path}
-                        </span>
-                        : {source?.message}
-                      </li>
-                    </div>
-                  ))}
 
                 <Button className="bg-baseColor text-black w-full hover:bg-lime-600">
                   Add Product

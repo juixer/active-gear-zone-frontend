@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "../../components/ui/button";
-import Rating from "react-rating";
-import { FaRegStar, FaStar } from "react-icons/fa6";
+import { Rating } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
 import { NavLink } from "react-router-dom";
 export type TProduct = {
   _id: string;
@@ -36,14 +37,8 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             src={image}
             className="w-72 h-72 rounded-md hover:scale-110  duration-300 object-cover"
           />
-          <Rating
-            readonly
-            placeholderRating={rating}
-            emptySymbol={<FaRegStar className="text-orange-500" />}
-            fullSymbol={<FaStar className="text-orange-500" />}
-            placeholderSymbol={<FaStar className="text-orange-500" />}
-            className="absolute bottom-0 text-base"
-          />
+          <Rating className="absolute bottom-8 bg-black p-1 bg-opacity-40 rounded-md" style={{ maxWidth: 100 }} readOnly value={rating as number} />
+          
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3 w-full">

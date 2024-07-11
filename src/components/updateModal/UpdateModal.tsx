@@ -16,7 +16,6 @@ import {
   useForm,
 } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import { TCategories } from "../CategoryCarousel/CategoryCarouSel";
 import { Label } from "../ui/label";
 import { TProduct } from "@/utils/ProductCard/ProductCard";
 import {
@@ -30,6 +29,7 @@ import { toast } from "sonner";
 import { useUpdateProductMutation } from "@/redux/features/product/product.api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { brands, categories } from "@/constatnt/constant";
 
 const UpdateModal = ({ product }: { product: TProduct }) => {
   const {
@@ -43,60 +43,6 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
     description,
   } = product;
 
-  const categories: TCategories[] = [
-    {
-      img: "https://i.ibb.co/CM5PSpd/football.png",
-      text: "Football",
-    },
-    {
-      img: "https://i.ibb.co/LrjPhGh/basketball.png",
-      text: "Basketball",
-    },
-    {
-      img: "https://i.ibb.co/njsYyQf/tennis.png",
-      text: "Tennis",
-    },
-    {
-      img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Shoes",
-    },
-    {
-      img: "https://i.ibb.co/0mTSw8N/swimming.png",
-      text: "Swimming",
-    },
-    {
-      img: "https://i.ibb.co/hDsNwCf/gym.png",
-      text: "Gym",
-    },
-    {
-      img: "https://i.ibb.co/zmQDWkZ/boxing.png",
-      text: "Boxing",
-    },
-    {
-      img: "https://i.ibb.co/RN0FVDR/cycling.png",
-      text: "Cycling",
-    },
-    {
-      img: "https://i.ibb.co/4Zd5YMK/golf.png",
-      text: "Golf",
-    },
-    {
-      img: "https://i.ibb.co/RvNv1x4/volleyball.png",
-      text: "Volleyball",
-    },
-  ];
-  const sportsGoodsBrands = [
-    { name: "Nike" },
-    { name: "Adidas" },
-    { name: "Puma" },
-    { name: "Under Armour" },
-    { name: "Reebok" },
-    { name: "Asics" },
-    { name: "New Balance" },
-    { name: "Columbia Sportswear" },
-    { name: "The North Face" },
-    { name: "Patagonia" },
-  ];
 
   const rating = [
     { star: "1" },
@@ -259,7 +205,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
                         <SelectValue placeholder=" Select Product Brand" />
                       </SelectTrigger>
                       <SelectContent>
-                        {sportsGoodsBrands.map((item, index) => (
+                        {brands.map((item, index) => (
                           <SelectItem key={index} value={item.name}>
                             {item.name}
                           </SelectItem>

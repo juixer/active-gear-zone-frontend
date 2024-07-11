@@ -35,7 +35,7 @@ const SingleProduct = () => {
   const dispatch = useAppDispatch();
   const cartNumber = useAppSelector(selectCartNumber);
   const totalQuantity = useAppSelector((state: RootState) =>
-    selectCurrentQuantity(state, productId)
+    selectCurrentQuantity(state, (productId as string))
   );
 
   const { data, isLoading } = useGetSingleProductQuery(productId, {
@@ -64,7 +64,7 @@ const SingleProduct = () => {
     isAvailable,
   } = data.data;
 
-  const handleQuantityChange = (e) => {
+  const handleQuantityChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const quantity = Number(e.currentTarget.value);
     if (quantity > stockQuantity) {

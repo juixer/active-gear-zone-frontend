@@ -1,4 +1,3 @@
-import { TCategories } from "@/components/CategoryCarousel/CategoryCarouSel";
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +29,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
+import { brands, categoriesForFilter } from "@/constatnt/constant";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,8 +37,8 @@ const AllProducts = () => {
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [rating, setRating] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
+  
+  const [searchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(0);
 
@@ -89,64 +89,8 @@ const AllProducts = () => {
     }
   }, [data]);
 
-  const categories: TCategories[] = [
-    {
-      img: "",
-      text: "All Categories",
-    },
-    {
-      img: "https://i.ibb.co/CM5PSpd/football.png",
-      text: "Football",
-    },
-    {
-      img: "https://i.ibb.co/LrjPhGh/basketball.png",
-      text: "Basketball",
-    },
-    {
-      img: "https://i.ibb.co/njsYyQf/tennis.png",
-      text: "Tennis",
-    },
-    {
-      img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-      text: "Shoes",
-    },
-    {
-      img: "https://i.ibb.co/0mTSw8N/swimming.png",
-      text: "Swimming",
-    },
-    {
-      img: "https://i.ibb.co/hDsNwCf/gym.png",
-      text: "Gym",
-    },
-    {
-      img: "https://i.ibb.co/zmQDWkZ/boxing.png",
-      text: "Boxing",
-    },
-    {
-      img: "https://i.ibb.co/RN0FVDR/cycling.png",
-      text: "Cycling",
-    },
-    {
-      img: "https://i.ibb.co/4Zd5YMK/golf.png",
-      text: "Golf",
-    },
-    {
-      img: "https://i.ibb.co/RvNv1x4/volleyball.png",
-      text: "Volleyball",
-    },
-  ];
-  const sportsGoodsBrands = [
-    { name: "Nike" },
-    { name: "Adidas" },
-    { name: "Puma" },
-    { name: "Under Armour" },
-    { name: "Reebok" },
-    { name: "Asics" },
-    { name: "New Balance" },
-    { name: "Columbia Sportswear" },
-    { name: "The North Face" },
-    { name: "Patagonia" },
-  ];
+ 
+  
 
   const totalButtons = [];
   for (let i = 0; i < totalPage; i++) {
@@ -217,7 +161,7 @@ const AllProducts = () => {
                           <SelectValue placeholder="Select Product Category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {categories.map((item, index) => (
+                          {categoriesForFilter.map((item, index) => (
                             <SelectItem
                               key={index}
                               value={
@@ -246,7 +190,7 @@ const AllProducts = () => {
                           <SelectValue placeholder=" Select Product Brand" />
                         </SelectTrigger>
                         <SelectContent>
-                          {sportsGoodsBrands.map((item, index) => (
+                          {brands.map((item, index) => (
                             <SelectItem key={index} value={item.name}>
                               {item.name}
                             </SelectItem>
@@ -341,7 +285,7 @@ const AllProducts = () => {
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
               <LoadingAni />
-            ) : error?.status === 404 ? (
+            ) : error ? (
               <div className="flex justify-center items-center flex-col">
                 <img src="https://i.ibb.co/9qzbtQF/11329060.png" />
                 <h1 className="text-3xl font-semibold text-center">
