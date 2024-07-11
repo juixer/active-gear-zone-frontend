@@ -345,7 +345,7 @@ const AllProducts = () => {
               <div className="flex justify-center items-center flex-col">
                 <img src="https://i.ibb.co/9qzbtQF/11329060.png" />
                 <h1 className="text-3xl font-semibold text-center">
-                  Sorry {category} is not available
+                  Sorry {category} product is not available
                 </h1>
               </div>
             ) : (
@@ -355,7 +355,8 @@ const AllProducts = () => {
                 ))}
               </div>
             )}
-            <div className="flex justify-center items-center gap-5 my-10">
+
+            {data?.data?.result && (
               <div className="flex justify-center gap-5 items-center mt-10">
                 <Pagination>
                   <PaginationContent className="space-x-3">
@@ -383,7 +384,7 @@ const AllProducts = () => {
                   </PaginationContent>
                 </Pagination>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
