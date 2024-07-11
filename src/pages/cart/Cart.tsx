@@ -39,6 +39,7 @@ const Cart = () => {
                 <TableHead>In-Stock</TableHead>
                 <TableHead>Quantity</TableHead>
                 <TableHead className="text-right">SubTotal</TableHead>
+                <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

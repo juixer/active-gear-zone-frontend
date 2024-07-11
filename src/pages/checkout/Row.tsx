@@ -4,11 +4,13 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import {
   decrement,
   increment,
+  removeProduct,
   selectCurrentQuantity,
   TCartItem,
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
+import { toast } from "sonner";
 
 const Row = ({ item }: { item: TCartItem }) => {
   const dispatch = useAppDispatch();
@@ -17,8 +19,12 @@ const Row = ({ item }: { item: TCartItem }) => {
     selectCurrentQuantity(state, productId)
   );
 
+  const handleCartDelete = () => {
+    dispatch(removeProduct({_id:productId , quantity: totalQuantity}))
+    toast.success("Product removed from cart");
+  }
   return (
-    <TableRow key={item._id}>
+    <TableRow key={item._id} className="font-medium">
       <TableCell>
         <img
           src={item.image}
@@ -31,7 +37,11 @@ const Row = ({ item }: { item: TCartItem }) => {
       <TableCell>
         <div className="flex ">
           <Button
-            onClick={() => dispatch(decrement({ _id: productId, price: (item.price as number) }))}
+            onClick={() =>
+              dispatch(
+                decrement({ _id: productId, price: item.price as number })
+              )
+            }
             className="bg-white text-black border hover:bg-zinc-200"
           >
             -
@@ -48,7 +58,11 @@ const Row = ({ item }: { item: TCartItem }) => {
               item.quantity === item.stockQuantity ||
               item.quantity > (item.stockQuantity as number)
             }
-            onClick={() => dispatch(increment({ _id: productId, price: (item.price as number) }))}
+            onClick={() =>
+              dispatch(
+                increment({ _id: productId, price: item.price as number })
+              )
+            }
             className="bg-white text-black border hover:bg-zinc-200"
           >
             +
@@ -56,6 +70,9 @@ const Row = ({ item }: { item: TCartItem }) => {
         </div>
       </TableCell>
       <TableCell className="text-right">${item.totalPrice}</TableCell>
+      <TableCell className="text-right">
+        <Button onClick={handleCartDelete} className="bg-red-500 hover:bg-red-400 duration-300">Delete</Button>
+      </TableCell>
     </TableRow>
   );
 };
