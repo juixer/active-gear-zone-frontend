@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner";
 import { RootState } from "@/redux/store";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
+import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -45,7 +46,7 @@ const SingleProduct = () => {
   if (isLoading) {
     return (
       <Container>
-        <h1>Loading...</h1>
+        <LoadingAni/>
       </Container>
     );
   }
@@ -119,6 +120,7 @@ const SingleProduct = () => {
 
   return (
     <Container>
+      
       <HelmetElement text={name}/>
       <div className="py-5">
         <div className="flex justify-center flex-col md:flex-row items-center gap-5 md:gap-10">

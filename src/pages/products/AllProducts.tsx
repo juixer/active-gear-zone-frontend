@@ -24,6 +24,7 @@ import Headline from "@/utils/Headline/Headline";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
+import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -131,7 +132,7 @@ const AllProducts = () => {
 
   return (
     <Container>
-      <HelmetElement text="All Products"/>
+      <HelmetElement text="All Products" />
       <div className="py-5">
         <div className="py-5 flex justify-center items-center gap-3"></div>
         <Headline text="Our Products" />
@@ -311,7 +312,7 @@ const AllProducts = () => {
 
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
-              <p>Loading...</p>
+              <LoadingAni />
             ) : (
               <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {data?.data.map((product: TProduct) => (

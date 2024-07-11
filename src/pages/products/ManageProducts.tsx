@@ -28,6 +28,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
+import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -341,14 +342,14 @@ const ManageProducts = () => {
         </TabsContent>
         <TabsContent value="update">
           {isLoading ? (
-            <p>Loading....</p>
+            <LoadingAni/>
           ) : (
             <ProductTable products={data?.data} table="Update" />
           )}
         </TabsContent>
         <TabsContent value="delete">
           {isLoading ? (
-            <p>Loading....</p>
+            <LoadingAni/>
           ) : (
             <ProductTable products={data?.data} table="Delete" />
           )}
