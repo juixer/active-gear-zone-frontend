@@ -4,17 +4,17 @@ import ContactUs from "@/components/ContactUs/ContactUs";
 import Container from "@/components/layout/Container";
 import { useGetLatestProductQuery } from "@/redux/features/product/product.api";
 import Headline from "@/utils/Headline/Headline";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 const Home = () => {
-  
   const { isLoading, data } = useGetLatestProductQuery(undefined, {
-    pollingInterval: 10000,
+    pollingInterval: 5000,
     skipPollingIfUnfocused: true,
   });
 
   return (
-    <div>
       <Container>
+        <HelmetElement text="Home"/>
         <Slider />
         <Headline text="latest product" />
 
@@ -36,7 +36,6 @@ const Home = () => {
 
         <ContactUs />
       </Container>
-    </div>
   );
 };
 export default Home;

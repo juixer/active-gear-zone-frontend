@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Headline from "@/utils/Headline/Headline";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const AboutUs = () => {
   const teamMembers = [
@@ -42,6 +43,7 @@ const AboutUs = () => {
   ];
   return (
     <Container>
+      <HelmetElement text="About us"/>
       <div className="py-5">
         <Headline text="About us" />
 

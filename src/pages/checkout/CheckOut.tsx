@@ -11,6 +11,7 @@ import {
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Headline from "@/utils/Headline/Headline";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -65,6 +66,7 @@ const CheckOut = () => {
 
   return (
     <Container>
+      <HelmetElement text="Checkout"/>
       <div className="py-5 space-y-5">
         <Headline text="checkout" />
         <div className="flex justify-center items-center">

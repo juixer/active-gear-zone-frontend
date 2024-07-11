@@ -124,6 +124,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         stockQuantity: parseInt(data.stockQuantity),
         rating: parseInt(data.rating),
         price: parseFloat(data.price),
+        isAvailable: stockQuantity > 0 ? true : false,
       };
 
       if (data.image[0]) {
@@ -142,13 +143,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         )
 
         updateProductInfo = {
-          name: data.name,
-          description: data.description,
-          category: data.category,
-          brand: data.brand,
-          stockQuantity: parseInt(data.stockQuantity),
-          rating: parseInt(data.rating),
-          price: parseFloat(data.price),
+          ...updateProductInfo,
           image: imgRes.data.data.url,
         };
       }

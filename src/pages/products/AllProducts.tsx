@@ -21,7 +21,9 @@ import {
   useForm,
 } from "react-hook-form";
 import Headline from "@/utils/Headline/Headline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,6 +31,15 @@ const AllProducts = () => {
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [rating, setRating] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const categoryParams = searchParams.get("category");
+  useEffect(() => {
+    if (categoryParams) {
+      setCategory(categoryParams);
+    }
+  }, [categoryParams]);
 
   const methods = useForm();
   const query = {
@@ -40,23 +51,30 @@ const AllProducts = () => {
   };
 
   const onSubmit = (data: FieldValues) => {
-    const searchTerm = data.searchTerm;
     const sort = data.sort;
     const category = data.category;
     const brand = data.brand;
     const rating = data.rating;
     setSearchTerm(searchTerm);
     setSort(sort);
-    setCategory(category);
+    if (category === " ") {
+      setCategory("");
+    } else {
+      setCategory(category);
+    }
     setBrand(brand);
     setRating(rating);
   };
 
   const { isLoading, data } = useGetProductsQuery(query, {
-    pollingInterval: 10000,
+    pollingInterval: 5000,
     skipPollingIfUnfocused: true,
   });
   const categories: TCategories[] = [
+    {
+      img: "",
+      text: "All Categories",
+    },
     {
       img: "https://i.ibb.co/CM5PSpd/football.png",
       text: "Football",
@@ -113,6 +131,7 @@ const AllProducts = () => {
 
   return (
     <Container>
+      <HelmetElement text="All Products"/>
       <div className="py-5">
         <div className="py-5 flex justify-center items-center gap-3"></div>
         <Headline text="Our Products" />
@@ -125,7 +144,7 @@ const AllProducts = () => {
               >
                 <div className="flex  gap-5 w-full justify-center items-center">
                   <Input
-                    {...methods.register("searchTerm")}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     type="text"
                     placeholder="Search product by name"
                   />
@@ -170,7 +189,12 @@ const AllProducts = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {categories.map((item, index) => (
-                            <SelectItem key={index} value={item.text}>
+                            <SelectItem
+                              key={index}
+                              value={
+                                item.text === "All Categories" ? " " : item.text
+                              }
+                            >
                               {item.text}
                             </SelectItem>
                           ))}
@@ -268,10 +292,20 @@ const AllProducts = () => {
                     )}
                   />
                 </div>
-                <Button className="bg-baseColor hover:bg-lime-600 text-black w-full">
-                  Filter Products
-                </Button>
+                <div className="flex">
+                  <Button className="bg-baseColor hover:bg-lime-600 text-black w-full">
+                    Filter Products
+                  </Button>
+                </div>
               </form>
+              <div className="py-3">
+                <Button
+                  onClick={() => location.reload()}
+                  className="bg-red-500 hover:bg-red-400 w-full"
+                >
+                  Clear Filter
+                </Button>
+              </div>
             </FormProvider>
           </div>
 

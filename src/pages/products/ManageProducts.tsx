@@ -21,12 +21,13 @@ import {
 } from "react-hook-form";
 import {
   useAddProductMutation,
-  useGetProductsQuery,
+  useGetAllProductsQuery,
 } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const ManageProducts = () => {
   const categories: TCategories[] = [
@@ -155,10 +156,13 @@ const ManageProducts = () => {
     }
   };
 
-  const { data, isLoading } = useGetProductsQuery(undefined);
-
+  const { data, isLoading } = useGetAllProductsQuery(undefined,{
+    pollingInterval: 5000,
+    skipPollingIfUnfocused: true
+  });
   return (
     <Container>
+      <HelmetElement text="Manage Products"/>
       <Tabs defaultValue="add" className="py-5 w-full">
         <div className="flex justify-center items-center">
           <TabsList className="bg-zinc-300">

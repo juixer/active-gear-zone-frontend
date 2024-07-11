@@ -4,7 +4,7 @@ const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (query) => ({
-        url: `/products?searchTerm=${query.searchTerm}&sort=${query.sort}&category=${query.category}&brand=${query.brand}&rating=${query.rating}`,
+        url: `/products/filter?searchTerm=${query.searchTerm}&sort=${query.sort}&category=${query.category}&brand=${query.brand}&rating=${query.rating}`,
         method: "GET",
       }),
       providesTags: ["product"],
@@ -15,14 +15,14 @@ const productApi = baseApi.injectEndpoints({
         method: "POST",
         body: productInfo,
       }),
-      invalidatesTags: ["product", "products"],
+      invalidatesTags: ["product"],
     }),
     deleteProduct: builder.mutation({
       query: (productId) => ({
         url: `/products/${productId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["product", "products"],
+      invalidatesTags: ["product"],
     }),
     updateProduct: builder.mutation({
       query: (updateData) => ({
@@ -30,7 +30,7 @@ const productApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: updateData.updateInfo,
       }),
-      invalidatesTags: ["product", "products"],
+      invalidatesTags: ["product"],
     }),
     getSingleProduct: builder.query({
       query: (productId) => ({
@@ -43,7 +43,14 @@ const productApi = baseApi.injectEndpoints({
         url: "/products/latest",
         method: "GET",
       }),
-      providesTags: ["products"],
+      providesTags: ["product"],
+    }),
+    getAllProducts: builder.query({
+      query: () => ({
+        url: "/products",
+        method: "GET",
+      }),
+      providesTags: ["product"],
     }),
   }),
 });
@@ -55,4 +62,5 @@ export const {
   useUpdateProductMutation,
   useGetSingleProductQuery,
   useGetLatestProductQuery,
+  useGetAllProductsQuery
 } = productApi;

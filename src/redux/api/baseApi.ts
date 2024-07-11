@@ -5,6 +5,6 @@ export const baseApi = createApi({
     baseUrl: "http://localhost:5000/api",
     credentials: "include",
   }),
-  tagTypes:['product', "products"],
+  tagTypes:['product'],
   endpoints: () => ({}),
 });

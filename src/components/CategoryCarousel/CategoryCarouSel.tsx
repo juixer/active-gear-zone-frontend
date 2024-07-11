@@ -16,15 +16,15 @@ const CategoryCarouSel = () => {
   const categories: TCategories[] = [
     {
       img: "https://i.ibb.co/CM5PSpd/football.png",
-      text: "Football Gear",
+      text: "Football",
     },
     {
       img: "https://i.ibb.co/LrjPhGh/basketball.png",
-      text: "Basketball Gear",
+      text: "Basketball",
     },
     {
       img: "https://i.ibb.co/njsYyQf/tennis.png",
-      text: "Tennis Gear",
+      text: "Tennis",
     },
     {
       img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
@@ -32,27 +32,27 @@ const CategoryCarouSel = () => {
     },
     {
       img: "https://i.ibb.co/0mTSw8N/swimming.png",
-      text: "Swimming Gear",
+      text: "Swimming",
     },
     {
       img: "https://i.ibb.co/hDsNwCf/gym.png",
-      text: "Gym Gear",
+      text: "Gym",
     },
     {
       img: "https://i.ibb.co/zmQDWkZ/boxing.png",
-      text: "Boxing Gear",
+      text: "Boxing",
     },
     {
       img: "https://i.ibb.co/RN0FVDR/cycling.png",
-      text: "Cycling Gear",
+      text: "Cycling",
     },
     {
       img: "https://i.ibb.co/4Zd5YMK/golf.png",
-      text: "Golf Gear",
+      text: "Golf",
     },
     {
       img: "https://i.ibb.co/RvNv1x4/volleyball.png",
-      text: "Volleyball Gear",
+      text: "Volleyball",
     },
   ];
   return (
@@ -73,7 +73,7 @@ const CategoryCarouSel = () => {
                 <h1 className="md:text-2xl text-white font-semibold max-w-48 md:max-w-96 mb-3">
                   {item.text}
                 </h1>
-                <NavLink to={"/products"}>
+                <NavLink to={`/products?category=${item.text}`}>
                   <Button className="bg-baseColor hover:bg-lime-600 duration-300 text-black">
                     Discovery Now
                   </Button>

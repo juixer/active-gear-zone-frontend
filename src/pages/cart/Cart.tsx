@@ -13,6 +13,7 @@ import Headline from "@/utils/Headline/Headline";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "react-router-dom";
 import Row from "../checkout/Row";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const Cart = () => {
   const cart = useAppSelector(SelectCartItems);
@@ -27,6 +28,7 @@ const Cart = () => {
 
   return (
     <Container>
+      <HelmetElement text="Cart"/>
       <div className="py-5 flex flex-col-reverse lg:flex-row justify-between gap-5 ">
         <div className="lg:w-3/4">
           <Table>
@@ -81,11 +83,24 @@ const Cart = () => {
           </div>
 
           <div>
-            <NavLink onClick={handleCheckOut} to={"/checkout"}>
-              <Button className="w-full bg-baseColor text-black hover:bg-lime-600">
+            {cart.length ? (
+              <NavLink to={"/checkout"}>
+                <Button
+                  onClick={handleCheckOut}
+                  disabled={!cart.length}
+                  className="w-full bg-baseColor text-black hover:bg-lime-600"
+                >
+                  Checkout
+                </Button>
+              </NavLink>
+            ) : (
+              <Button
+                disabled={!cart.length}
+                className="w-full bg-baseColor text-black hover:bg-lime-600"
+              >
                 Checkout
               </Button>
-            </NavLink>
+            )}
           </div>
         </div>
       </div>

@@ -26,6 +26,7 @@ import {
 } from "@/redux/features/cart/cartSlice";
 import { toast } from "sonner";
 import { RootState } from "@/redux/store";
+import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -37,7 +38,7 @@ const SingleProduct = () => {
   );
 
   const { data, isLoading } = useGetSingleProductQuery(productId,{
-    pollingInterval: 10000,
+    pollingInterval: 5000,
     skipPollingIfUnfocused: true,
   });
 
@@ -118,6 +119,7 @@ const SingleProduct = () => {
 
   return (
     <Container>
+      <HelmetElement text={name}/>
       <div className="py-5">
         <div className="flex justify-center flex-col md:flex-row items-center gap-5 md:gap-10">
           <PhotoProvider>
