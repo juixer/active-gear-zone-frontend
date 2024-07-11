@@ -20,11 +20,12 @@ import {
   FormProvider,
   useForm,
 } from "react-hook-form";
-import Headline from "@/utils/Headline/Headline";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
 import LoadingAni from "@/utils/LoadingAni/LoadingAni";
+
+
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,10 +68,11 @@ const AllProducts = () => {
     setRating(rating);
   };
 
-  const { isLoading, data } = useGetProductsQuery(query, {
-    pollingInterval: 5000,
+  const { isLoading, data, error } = useGetProductsQuery(query, {
+    pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
+
   const categories: TCategories[] = [
     {
       img: "",
@@ -135,7 +137,6 @@ const AllProducts = () => {
       <HelmetElement text="All Products" />
       <div className="py-5">
         <div className="py-5 flex justify-center items-center gap-3"></div>
-        <Headline text="Our Products" />
         <div className="flex flex-col lg:flex-row gap-5 py-5">
           <div className="lg:w-1/4  p-5">
             <FormProvider {...methods}>
@@ -313,6 +314,11 @@ const AllProducts = () => {
           <div className="lg:w-3/4 p-5">
             {isLoading ? (
               <LoadingAni />
+            ) : error?.status  === 404 ? (
+              <div className="flex justify-center items-center flex-col">
+                <img src="https://i.ibb.co/9qzbtQF/11329060.png"/>
+                <h1 className="text-3xl font-semibold text-center">Sorry {category} is not available</h1>
+              </div>
             ) : (
               <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {data?.data.map((product: TProduct) => (

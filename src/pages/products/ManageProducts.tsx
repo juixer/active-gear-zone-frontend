@@ -98,7 +98,7 @@ const ManageProducts = () => {
 
   const [addProduct] = useAddProductMutation();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [errorMessages, setErrorMessages] = useState([]);
 
@@ -119,14 +119,16 @@ const ManageProducts = () => {
       const imgData = new FormData();
       imgData.append("image", imgFile);
       const imgRes = await axios.post(
-        `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?expiration=600&key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
         imgData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
-      )
+      );
 
       if (imgRes?.data?.success) {
         const product = {
@@ -145,8 +147,7 @@ const ManageProducts = () => {
           id: toastId,
           duration: 3000,
         });
-        navigate(`/product/${result.data._id}`)
-
+        navigate(`/product/${result.data._id}`);
       }
     } catch (error) {
       setErrorMessages(error?.data?.errorSources);
@@ -157,13 +158,13 @@ const ManageProducts = () => {
     }
   };
 
-  const { data, isLoading } = useGetAllProductsQuery(undefined,{
-    pollingInterval: 5000,
-    skipPollingIfUnfocused: true
+  const { data, isLoading, error } = useGetAllProductsQuery(undefined, {
+    pollingInterval: 10000,
+    skipPollingIfUnfocused: true,
   });
   return (
     <Container>
-      <HelmetElement text="Manage Products"/>
+      <HelmetElement text="Manage Products" />
       <Tabs defaultValue="add" className="py-5 w-full">
         <div className="flex justify-center items-center">
           <TabsList className="bg-zinc-300">
@@ -342,14 +343,28 @@ const ManageProducts = () => {
         </TabsContent>
         <TabsContent value="update">
           {isLoading ? (
-            <LoadingAni/>
+            <LoadingAni />
+          ) : !data?.data.length ? (
+            <div className="flex justify-center items-center flex-col">
+              <img src="https://i.ibb.co/9qzbtQF/11329060.png" />
+              <h1 className="text-3xl font-semibold text-center">
+                Sorry there is no product available
+              </h1>
+            </div>
           ) : (
             <ProductTable products={data?.data} table="Update" />
           )}
         </TabsContent>
         <TabsContent value="delete">
           {isLoading ? (
-            <LoadingAni/>
+            <LoadingAni />
+          ) : !data?.data.length ? (
+            <div className="flex justify-center items-center flex-col">
+              <img src="https://i.ibb.co/9qzbtQF/11329060.png" />
+              <h1 className="text-3xl font-semibold text-center">
+                Sorry there is no product available
+              </h1>
+            </div>
           ) : (
             <ProductTable products={data?.data} table="Delete" />
           )}

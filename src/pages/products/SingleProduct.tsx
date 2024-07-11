@@ -38,15 +38,15 @@ const SingleProduct = () => {
     selectCurrentQuantity(state, productId)
   );
 
-  const { data, isLoading } = useGetSingleProductQuery(productId,{
-    pollingInterval: 5000,
+  const { data, isLoading } = useGetSingleProductQuery(productId, {
+    pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
 
   if (isLoading) {
     return (
       <Container>
-        <LoadingAni/>
+        <LoadingAni />
       </Container>
     );
   }
@@ -120,8 +120,7 @@ const SingleProduct = () => {
 
   return (
     <Container>
-      
-      <HelmetElement text={name}/>
+      <HelmetElement text={name} />
       <div className="py-5">
         <div className="flex justify-center flex-col md:flex-row items-center gap-5 md:gap-10">
           <PhotoProvider>

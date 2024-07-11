@@ -9,36 +9,34 @@ import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 const Home = () => {
   const { isLoading, data } = useGetLatestProductQuery(undefined, {
-    pollingInterval: 5000,
+    pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
 
   return (
-      <Container>
-        <HelmetElement text="Home"/>
-        <Slider />
-        <Headline text="latest product" />
+    <Container>
+      <HelmetElement text="Home" />
+      <Slider />
+      <Headline text="latest product" />
 
-        
-          {isLoading ? (
-            <LoadingAni/>
-          ) : (
-            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 py-5">
-           { data?.data.map((product: TProduct) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-            </div>
-          )}
-       
+      {isLoading ? (
+        <LoadingAni />
+      ) : (
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 py-5">
+          {data?.data.map((product: TProduct) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
+      )}
 
-        <Headline text="our categories" />
+      <Headline text="our categories" />
 
-        <CategoryCarouSel />
+      <CategoryCarouSel />
 
-        <Headline text="Contact Us" />
+      <Headline text="Contact Us" />
 
-        <ContactUs />
-      </Container>
+      <ContactUs />
+    </Container>
   );
 };
 export default Home;
