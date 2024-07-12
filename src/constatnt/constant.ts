@@ -14,19 +14,10 @@ export const categoriesForFilter: TCategories[] = [
     text: "Tennis",
   },
   {
-    text: "Shoes",
-  },
-  {
-    text: "Swimming",
-  },
-  {
-    text: "Gym",
+    text: "Cricket",
   },
   {
     text: "Boxing",
-  },
-  {
-    text: "Cycling",
   },
   {
     text: "Golf",
@@ -49,24 +40,12 @@ export const categories: TCategories[] = [
     text: "Tennis",
   },
   {
-    img: "https://i.ibb.co/xYqnwsv/runnig-shoe.png",
-    text: "Shoes",
-  },
-  {
-    img: "https://i.ibb.co/0mTSw8N/swimming.png",
-    text: "Swimming",
-  },
-  {
-    img: "https://i.ibb.co/hDsNwCf/gym.png",
-    text: "Gym",
+    img: "https://i.ibb.co/gPVzkvJ/cricket.png",
+    text: "Cricket",
   },
   {
     img: "https://i.ibb.co/zmQDWkZ/boxing.png",
     text: "Boxing",
-  },
-  {
-    img: "https://i.ibb.co/RN0FVDR/cycling.png",
-    text: "Cycling",
   },
   {
     img: "https://i.ibb.co/4Zd5YMK/golf.png",
@@ -84,4 +63,9 @@ export const brands: TBrands[] = [
   { name: "Puma" },
   { name: "Under Armour" },
   { name: "Reebok" },
+  { name: "Wilson" },
+  { name: "Dunlop" },
+  { name: "Yonex" },
+  { name: "Rival" },
+  { name: "Titleist" },
 ];
