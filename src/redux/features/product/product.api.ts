@@ -2,6 +2,7 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // FOR ALL PRODUCT FILTERING
     getProducts: builder.query({
       query: (query) => ({
         url: `/products/filter?searchTerm=${query.searchTerm}&sort=${query.sort}&category=${query.category}&brand=${query.brand}&rating=${query.rating}&page=${query.page}&limit=${query.limit}`,
@@ -9,6 +10,7 @@ const productApi = baseApi.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    // ADDING PRODUCT INTO DB
     addProduct: builder.mutation({
       query: (productInfo) => ({
         url: "/products",
@@ -17,6 +19,7 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    // DELETE PRODUCT FROM DB
     deleteProduct: builder.mutation({
       query: (productId) => ({
         url: `/products/${productId}`,
@@ -24,6 +27,7 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    // UPDATE PRODUCT IN DB
     updateProduct: builder.mutation({
       query: (updateData) => ({
         url: `/products/${updateData.productId}`,
@@ -32,12 +36,14 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    // SINGLE PRODUCT INFO
     getSingleProduct: builder.query({
       query: (productId) => ({
         url: `/products/${productId}`,
         method: "GET",
       }),
     }),
+    // LATEST PRODUCTS
     getLatestProduct: builder.query({
       query: () => ({
         url: "/products/latest",
@@ -45,6 +51,7 @@ const productApi = baseApi.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    // ALL PRODUCTS
     getAllProducts: builder.query({
       query: () => ({
         url: "/products",

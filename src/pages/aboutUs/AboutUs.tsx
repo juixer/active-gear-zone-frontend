@@ -3,6 +3,7 @@ import Headline from "@/utils/Headline/Headline";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const AboutUs = () => {
+  // TEAM MEMBER COLLECTION
   const teamMembers = [
     {
       name: "John Smith",

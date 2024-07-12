@@ -5,13 +5,14 @@ import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 import { toast } from "sonner";
 const ContactUs = () => {
+  // USE REF FOR GETTING FORM DATA SUGGESTED BY EMAILJS
   const form = useRef<HTMLFormElement | null>(null);
 
   const sendEmail = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const toastId = toast.loading("Please wait...");
-
+// THIS IS EMAILJS CONFIGURATION
     if (form.current) {
       emailjs
         .sendForm('service_2qjsz3l', 'template_2trtxm6', form.current, {
@@ -36,6 +37,7 @@ const ContactUs = () => {
         src="https://i.ibb.co/cN3wKCM/email.png"
         className="w-[30%] hidden lg:flex"
       />
+      {/* EMAIL FORM */}
       <form onSubmit={sendEmail} ref={form} className="space-y-5 w-96">
         <Input
           className="max-w-96"

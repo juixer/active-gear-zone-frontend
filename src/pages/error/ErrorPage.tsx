@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 const ErrorPage = () => {
   const navigate = useNavigate();
   return (
+    // THIS IS ERROR PAGE FOR REACT ROUTER
     <Container>
       <div className="flex lg:flex-row flex-col gap-5">
         <div>

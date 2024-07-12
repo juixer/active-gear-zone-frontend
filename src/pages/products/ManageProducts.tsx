@@ -31,7 +31,7 @@ import { brands, categories } from "@/constatnt/constant";
 
 const ManageProducts = () => {
 
-
+// RATING FOR SHADCN SELECT COMPONENT
   const rating = [
     { star: "1" },
     { star: "2" },
@@ -42,10 +42,12 @@ const ManageProducts = () => {
 
   const methods = useForm();
 
+  // ADD PRODUCT MUTATION
   const [addProduct] = useAddProductMutation();
 
   const navigate = useNavigate();
 
+  // HANDLING ADD PRODUCT FORM SUBMIT
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
 
@@ -61,6 +63,8 @@ const ManageProducts = () => {
 
       const imgData = new FormData();
       imgData.append("image", imgFile);
+
+      // UPLOADING IMAGE
       const imgRes = await axios.post(
         `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_IMGBB_API_KEY
@@ -90,6 +94,7 @@ const ManageProducts = () => {
           id: toastId,
           duration: 3000,
         });
+        // NAVIGATE TO PRODUCT DETAILS PAGE
         navigate(`/product/${result.data._id}`);
       }
     } catch (error) {
@@ -100,6 +105,7 @@ const ManageProducts = () => {
     }
   };
 
+  // GETTING ALL PRODUCT FROM DB
   const { data, isLoading } = useGetAllProductsQuery(undefined, {
     pollingInterval: 10000,
     skipPollingIfUnfocused: true,

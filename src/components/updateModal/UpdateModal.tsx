@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import { brands, categories } from "@/constatnt/constant";
 
 const UpdateModal = ({ product }: { product: TProduct }) => {
+  // INFO DESTRUCTURED FOR UPDATE
   const {
     brand,
     category,
@@ -43,7 +44,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
     description,
   } = product;
 
-
+  // RATING STRING CONVERT FOR SHADCN SELECT COMPONENT
   const rating = [
     { star: "1" },
     { star: "2" },
@@ -52,14 +53,22 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
     { star: "5" },
   ];
 
+  // METHODS FROM USEFORM
   const methods = useForm();
+
+  // UPDATE PRODUCT MUTATION
   const [updateProduct] = useUpdateProductMutation();
+
+  // NAVIGATE FROM REACT ROUTER
   const navigate = useNavigate();
 
+  // HANDLING UPDATE INFORMATION
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
 
     try {
+
+      // UPDATE PRODUCT INFO FOR REDUX PRODUCT API
       let updateProductInfo = {};
 
       updateProductInfo = {
@@ -73,11 +82,14 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         isAvailable: stockQuantity > 0 ? true : false,
       };
 
+      // CHECKING IS THERE IMAGE FILE
       if (data.image[0]) {
         const imgFile = data.image[0];
 
         const imgData = new FormData();
         imgData.append("image", imgFile);
+
+        // UPLOAD IMAGE TO IMGBB API AND GET THE UPDATED IMAGE URL
         const imgRes = await axios.post(
           `https://api.imgbb.com/1/upload?&key=${
             import.meta.env.VITE_IMGBB_API_KEY
@@ -90,6 +102,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
           }
         );
 
+        // ADDED IMAGE URL
         updateProductInfo = {
           name: data.name,
           description: data.description,
@@ -103,17 +116,20 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
         };
       }
 
+      // PRODUCT ID AND UPDATE INFO FOR REDUX PRODUCT API
       const updateData = {
         productId: product._id,
         updateInfo: updateProductInfo,
       };
 
+      // UPDATE PRODUCT INFO AND REDIRECT TO PRODUCT PAGE WITH NEW DATA
       const result = await updateProduct(updateData).unwrap();
       toast.success(`${result.message}`, {
         id: toastId,
         duration: 3000,
       });
       navigate(`/product/${result.data._id}`);
+      
     } catch (error) {
       toast.error(`Something went wrong`, {
         id: toastId,
@@ -180,6 +196,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
                         <SelectValue placeholder="Select Product Category" />
                       </SelectTrigger>
                       <SelectContent>
+                        {/* CATEGORY FROM CONSTANT FOLDER */}
                         {categories.map((item, index) => (
                           <SelectItem key={index} value={item.text}>
                             {item.text}
@@ -205,6 +222,7 @@ const UpdateModal = ({ product }: { product: TProduct }) => {
                         <SelectValue placeholder=" Select Product Brand" />
                       </SelectTrigger>
                       <SelectContent>
+                        {/* BRAND FROM CONSTANT  FOLDER */}
                         {brands.map((item, index) => (
                           <SelectItem key={index} value={item.name}>
                             {item.name}

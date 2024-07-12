@@ -12,17 +12,24 @@ import {
 import Headline from "@/utils/Headline/Headline";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "react-router-dom";
-import Row from "../checkout/Row";
+import Row from "./Row";
 import HelmetElement from "@/utils/Helmet/HelmetElement";
 
 const Cart = () => {
+  //  CART ITEMS
   const cart = useAppSelector(SelectCartItems);
+  // DISPATCH FROM REDUX
   const dispatch = useAppDispatch();
+
+  // HANDLING CHECKOUT
   const handleCheckOut = () => {
+    // CALCULATE SUBTOTAL AND ADD 15% TAX
     const subTotal = (
       cart.reduce((acc, item) => (item.totalPrice as number) + acc, 0) *
       (1 + 15 / 100)
     ).toFixed(2);
+
+    // DISPATCH ACTION IT WILL SET SUBTOTAL IN STORE
     dispatch(checkOut(Number(subTotal)));
   };
 

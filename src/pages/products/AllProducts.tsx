@@ -32,24 +32,29 @@ import {
 import { brands, categoriesForFilter } from "@/constatnt/constant";
 
 const AllProducts = () => {
+  // USE STATE FOR PRODUCT QUERY
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [rating, setRating] = useState("");
-  
+
   const [searchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(0);
 
+  // COLLECTING CATEGORY FROM REACT ROUTE SEARCHPARAMS
   const categoryParams = searchParams.get("category");
   useEffect(() => {
+    // REACT ROUTE SEARCHPARAMS CATEGORY SET IT TO CATEGORY
     if (categoryParams) {
       setCategory(categoryParams);
     }
   }, [categoryParams]);
 
+  // METHODS FROM REACT HOOK FORM
   const methods = useForm();
+  // QUERY FOR FILTERING PRODUCT
   const query = {
     searchTerm,
     sort,
@@ -60,6 +65,7 @@ const AllProducts = () => {
     limit: 9,
   };
 
+  // HANDLING FILTER SUBMIT
   const onSubmit = (data: FieldValues) => {
     const sort = data.sort;
     const category = data.category;
@@ -76,12 +82,14 @@ const AllProducts = () => {
     setRating(rating);
   };
 
+  // COLLECTING PRODUCT FROM DB
   const { isLoading, data, error } = useGetProductsQuery(query, {
     pollingInterval: 10000,
     skipPollingIfUnfocused: true,
   });
 
   useEffect(() => {
+    // GETTING TOTAL PAGE FOR PAGINATION
     if (data) {
       const totalData = data?.data?.totalCount;
       const perPage = Math.ceil(totalData / 9);
@@ -89,9 +97,7 @@ const AllProducts = () => {
     }
   }, [data]);
 
- 
-  
-
+  // LOOPING TOTAL BUTTON
   const totalButtons = [];
   for (let i = 0; i < totalPage; i++) {
     totalButtons.push(

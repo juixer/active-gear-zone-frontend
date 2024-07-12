@@ -1,5 +1,6 @@
 const Headline = ({ text }: { text: string }) => {
   return (
+    // REUSEABLE HEADLINE UTILS
     <div className="">
       <h1 className="text-4xl text-center uppercase text-slate-200">
         {text}

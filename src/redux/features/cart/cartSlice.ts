@@ -1,6 +1,7 @@
 import { RootState } from "@/redux/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// CART TYPE
 export type TCartItem = {
   _id: string;
   quantity: number;
@@ -11,6 +12,7 @@ export type TCartItem = {
   totalPrice?: number;
 };
 
+// INTIALSTATE TYPE
 type TInitialState = {
   cart: TCartItem[];
   cartNumber: number;
@@ -18,6 +20,7 @@ type TInitialState = {
   subTotal: number;
 };
 
+// INTIALSTATE VARIABLE
 const initialState: TInitialState = {
   cart: [],
   cartNumber: 1,
@@ -29,6 +32,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // INCREMENT CART ITEM
     increment: (
       state,
       action: PayloadAction<{ _id: string; price: number }>
@@ -40,6 +44,7 @@ export const cartSlice = createSlice({
         state.inCart++;
       }
     },
+    // DECREMENT CART ITEM
     decrement: (
       state,
       action: PayloadAction<{ _id: string; price: number }>
@@ -53,6 +58,7 @@ export const cartSlice = createSlice({
         }
       }
     },
+    // ADD PRODUCT INTO CART
     addToCart: (state, action: PayloadAction<TCartItem>) => {
       const item = state.cart.find((item) => item._id === action.payload._id);
       if (item) {
@@ -79,20 +85,25 @@ export const cartSlice = createSlice({
         state.inCart = action.payload.quantity;
       }
     },
+    // PRODUCT DETAILS CART NUMBER INCREMENT
     incrementCartNumber: (state) => {
       state.cartNumber++;
     },
+    // PRODUCT DETAILS CART NUMBER DECREMENT
     decrementCartNumber: (state) => {
       if (state.cartNumber > 1) {
         state.cartNumber--;
       }
     },
+    // PRODUCT DETAILS CART NUMBER CHANGED BY VALUE
     changeCartNumberByValue: (state, action: PayloadAction<number>) => {
       state.cartNumber = action.payload;
     },
+    // CLICK CHECKOUT IT WILL SET SUBTOTAL IN STORE
     checkOut: (state, action: PayloadAction<number>) => {
       state.subTotal = action.payload;
     },
+    // REMOVE PRODUCT FROM CART
     removeProduct: (
       state,
       action: PayloadAction<{ _id: string; quantity: number }>
@@ -100,6 +111,7 @@ export const cartSlice = createSlice({
       state.cart = state.cart.filter((item) => item._id !== action.payload._id);
       state.inCart -= action.payload.quantity;
     },
+    // CLEAR CART AFTER CHECKOUT
     clearCart: (state) => {
       state.cart = [];
       state.cartNumber = 0;

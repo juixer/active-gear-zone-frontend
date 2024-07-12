@@ -1,5 +1,6 @@
 import { TBrands, TCategories } from "@/types/types";
 
+// THIS IS FOR ALL PRODUCT PAGE FILTER OPTIONS CATEGORY
 export const categoriesForFilter: TCategories[] = [
   {
     text: "All Categories",
@@ -26,6 +27,8 @@ export const categoriesForFilter: TCategories[] = [
     text: "Volleyball",
   },
 ];
+
+// THIS IS FOR EVERYWHERE PRODUCT CATEGORY INCLUDES CATEGORY IMAGE
 export const categories: TCategories[] = [
   {
     img: "https://i.ibb.co/CM5PSpd/football.png",
@@ -57,6 +60,7 @@ export const categories: TCategories[] = [
   },
 ];
 
+// BRANDS NAMES
 export const brands: TBrands[] = [
   { name: "Nike" },
   { name: "Adidas" },

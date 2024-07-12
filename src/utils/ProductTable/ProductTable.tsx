@@ -19,9 +19,13 @@ type TTableContent = {
 };
 
 const ProductTable = ({ table, products }: TTableContent) => {
+  // DELETE COUNT MUTATION
   const [deleteProduct] = useDeleteProductMutation();
 
+  // HANDLING PRODUCT DELETE
   const handleProductDelete = async (productId: string) => {
+
+    // SWEET-ALERT CONFIRMATION ALERT
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -52,6 +56,7 @@ const ProductTable = ({ table, products }: TTableContent) => {
   };
 
   return (
+    // REUSEABLE TABLE FOR UPDATE AND DELETE PRODUCT
     <Table className="py-5">
       <TableCaption>{table} your products</TableCaption>
       <TableHeader>

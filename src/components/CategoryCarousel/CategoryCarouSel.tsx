@@ -13,7 +13,9 @@ import { categories } from "@/constatnt/constant";
 const CategoryCarouSel = () => {
 
   
+  
   return (
+    // CAROUSEL FOR PRODUCT CATEGORY
     <Carousel
       className="w-full py-5"
       plugins={[
@@ -24,6 +26,7 @@ const CategoryCarouSel = () => {
       opts={{ align: "start", loop: true }}
     >
       <CarouselContent className="-ml-1">
+        {/* CATEGORY IMPORTED FROM CONSTANT FOLDER */}
         {categories.map((item, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div className="p-1 relative">

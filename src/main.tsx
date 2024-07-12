@@ -11,12 +11,17 @@ import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* REDUX STORE */}
     <Provider store={store}>
+      {/* PERSIST */}
       <PersistGate loading={null} persistor={persistor}>
+        {/* HELMET */}
         <HelmetProvider>
+          {/* REACT ROUTER */}
           <RouterProvider router={router} />
         </HelmetProvider>
       </PersistGate>
+      {/* TOASTER */}
       <Toaster position="top-center" expand={true} />
     </Provider>
   </React.StrictMode>

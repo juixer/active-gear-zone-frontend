@@ -8,6 +8,7 @@ import HelmetElement from "@/utils/Helmet/HelmetElement";
 import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 import ProductCard, { TProduct } from "@/utils/ProductCard/ProductCard";
 const Home = () => {
+  // LEAST PRODUCTS FROM DB
   const { isLoading, data } = useGetLatestProductQuery(undefined, {
     pollingInterval: 10000,
     skipPollingIfUnfocused: true,
@@ -15,8 +16,11 @@ const Home = () => {
 
   return (
     <Container>
+      {/* HELMET */}
       <HelmetElement text="Home" />
+      {/* CAROUSEL */}
       <Slider />
+      {/* HEADLINE */}
       <Headline text="latest product" />
 
       {isLoading ? (

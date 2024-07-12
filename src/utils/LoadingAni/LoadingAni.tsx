@@ -1,6 +1,7 @@
 import { ThreeDots } from 'react-loader-spinner'
 const LoadingAni = () => {
   return (
+    // REUSEABLE LOADING ANIMATION
     <div className="flex justify-center items-center py-24">
       <ThreeDots
         height="80"

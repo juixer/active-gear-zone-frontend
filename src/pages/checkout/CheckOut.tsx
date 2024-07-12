@@ -18,26 +18,38 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const CheckOut = () => {
+  // CHECKING ITS CASH ON DELIVERY
   const [cod, setCod] = useState(false);
+  // CHECKING CREDIT CARD PAYMENT
   const [card, setCard] = useState(false);
+  // SUBTOTAL OF THE CART FROM STORE
   const subTotal = useAppSelector(selectSubTotal);
+  // CART ITEMS FROM THE STORE
   const cart = useAppSelector(SelectCartItems);
+  // CONFIRMING ORDER MUTATION
   const [confirmOrder] = useConfirmOrderMutation();
+  // DISPATCH FROM REDUX
   const dispatch = useAppDispatch();
+  // NAVIGATE FROM REACT ROUTER
   const navigate = useNavigate();
 
+  // CHANGING COD CHECKBOX
   const handleCodChange = () => {
     setCod(!cod);
   };
+  // CHANGING CARD CHECKBOX
   const handleCardChange = () => {
     setCard(!card);
   };
 
+  // REACT HOOK FORM 
   const { register, handleSubmit } = useForm();
 
+  // HANDLING CHECKOUT
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Please wait...");
     try {
+      // ORDER INFO OR ORDER MUTATION
       const orderInfo = {
         name: data.name,
         email: data.email,
@@ -51,12 +63,15 @@ const CheckOut = () => {
         })),
       };
 
+      // SENDING ORDER INFO TO CART API
       const result = await confirmOrder(orderInfo).unwrap();
       toast.success(`${result.message}`, {
         id: toastId,
         duration: 3000,
       });
+      // CLEARING CART
       dispatch(clearCart());
+      // NAVIGATING TO HOMEPAGE
       navigate("/");
     } catch (error) {
       console.log(error);

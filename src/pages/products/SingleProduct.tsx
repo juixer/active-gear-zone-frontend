@@ -30,19 +30,26 @@ import HelmetElement from "@/utils/Helmet/HelmetElement";
 import LoadingAni from "@/utils/LoadingAni/LoadingAni";
 
 const SingleProduct = () => {
+  // PRODUCT ID FROM REACT ROUTE PARAMS
   const { productId } = useParams();
 
   const dispatch = useAppDispatch();
+
+  // CART NUMBER FROM STORE
   const cartNumber = useAppSelector(selectCartNumber);
+  
+  // TOTAL QUANTITY FROM STORE
   const totalQuantity = useAppSelector((state: RootState) =>
     selectCurrentQuantity(state, (productId as string))
   );
 
+  // PRODUCT INFO FROM DB
   const { data, isLoading } = useGetSingleProductQuery(productId, {
     pollingInterval: 3000,
     skipPollingIfUnfocused: true,
   });
 
+  // CHECKING LOADING
   if (isLoading) {
     return (
       <Container>
@@ -51,6 +58,7 @@ const SingleProduct = () => {
     );
   }
 
+  // DESTRUCTURING PRODUCT INFO
   const {
     _id,
     brand,
@@ -64,24 +72,31 @@ const SingleProduct = () => {
     isAvailable,
   } = data.data;
 
+  // HANDLING QUANTITY CHANGE
   const handleQuantityChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    
     const quantity = Number(e.currentTarget.value);
+
+    // IF QUANTITY MORE THAN STOCK QUANTITY IT WILL SHOW TOAST ALTERT
     if (quantity > stockQuantity) {
       toast.error("Quantity exceeds stock", {
         duration: 3000,
       });
     }
 
+    // CHANGING CART NUMBER
     dispatch(changeCartNumberByValue(quantity));
   };
 
+  // HANDLING QUANTITY DECREMENT
   const handleDecrement = () => {
     if (cartNumber > 1) {
       dispatch(decrementCartNumber());
     }
   };
 
+  // HANDLING QUANTITY INCREMENT
   const handleIncrement = () => {
     if (cartNumber < stockQuantity) {
       dispatch(incrementCartNumber());
@@ -92,6 +107,7 @@ const SingleProduct = () => {
     }
   };
 
+  // HANDLING ADD TO CART
   const handelAddToCart = () => {
     const total = totalQuantity + cartNumber;
     if (total > stockQuantity) {
@@ -101,6 +117,7 @@ const SingleProduct = () => {
       return;
     }
 
+    // DISPATCHING CART INFO INTO CART SLICE
     dispatch(
       addToCart({
         _id,
@@ -115,6 +132,7 @@ const SingleProduct = () => {
       duration: 3000,
     });
 
+    // SETTING QUANTITY NUMBER TO 1
     dispatch(changeCartNumberByValue(1));
   };
 

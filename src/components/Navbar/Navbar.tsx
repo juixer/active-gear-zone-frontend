@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 const Navbar = () => {
   const inCart = useAppSelector(selectInCart);
 
+  // NAVLINKS FOR PC AND LAPTOP
   const navLinks = (
     <div className="space-x-10">
       <NavLink
@@ -62,6 +63,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-zinc-900 text-white sticky top-0 z-50 py-2 px-3">
+      {/* MOBILE AND TABLE NAVBAR */}
       <Sheet>
         <SheetTrigger className="flex items-center gap-5 lg:hidden text-3xl">
           <FaBars />
@@ -129,9 +131,10 @@ const Navbar = () => {
         </SheetContent>
       </Sheet>
 
-      {/* pc/laptop */}
+      {/* PC AND LAPTOP NAVBAR */}
       <div className="max-w-screen-2xl mx-auto hidden lg:flex items-center justify-between">
         <div className="flex justify-start">
+          {/* LOGO */}
           <NavLink className={"text-xl"} to={"/"}>
             <img
               src="https://i.ibb.co/QmkBvmg/Brimston-1.png"
@@ -141,6 +144,7 @@ const Navbar = () => {
         </div>
         <div className="flex justify-center">{navLinks}</div>
         <div className="flex justify-end">
+          {/* CART NAVLINK */}
           <NavLink className={"text-xl flex relative"} to={"/cart"}>
             <Button className="bg-baseColor hover:bg-lime-600 text-black">
               <FaCartShopping className="text-3xl" />

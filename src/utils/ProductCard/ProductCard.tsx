@@ -4,6 +4,7 @@ import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
 import { NavLink } from "react-router-dom";
+// PRODUCT TYPES
 export type TProduct = {
   _id: string;
   name: string;
@@ -18,6 +19,7 @@ export type TProduct = {
 };
 
 const ProductCard = ({ product }: { product: TProduct }) => {
+  // DESTRUCTURING PRODUCT INFORMATION
   const {
     _id,
     brand,
@@ -30,6 +32,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
     isAvailable,
   } = product;
   return (
+    // REUSEABLE PRODUCT CARD
     <Card className={`flex flex-col justify-center items-center shadow-xl`} data-aos="fade-up-left">
       <CardHeader>
         <CardTitle className="overflow-hidden rounded-md flex flex-col justify-center items-center relative">

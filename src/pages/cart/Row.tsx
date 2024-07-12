@@ -13,17 +13,22 @@ import { RootState } from "@/redux/store";
 import { toast } from "sonner";
 
 const Row = ({ item }: { item: TCartItem }) => {
+  // DISPATCH FROM REDUX
   const dispatch = useAppDispatch();
+  // PRODUCT ID FROM ITEM
   const productId = item._id;
+  // TOTAL QUANTITY FROM STORE
   const totalQuantity = useAppSelector((state: RootState) =>
     selectCurrentQuantity(state, productId)
   );
 
+  // HANDLING REMOVE CART ITEM
   const handleCartDelete = () => {
     dispatch(removeProduct({ _id: productId, quantity: totalQuantity }));
     toast.success("Product removed from cart", { duration: 3000 });
   };
   return (
+    // ROW FOR CART table
     <TableRow key={item._id} className="font-medium">
       <TableCell>
         <img

@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import Autoplay from "embla-carousel-autoplay";
 
 const Slider = () => {
+  // CAROUSEL ITEMS
   const items = [
     {
       img: "https://i.ibb.co/XDm9ZGT/pic-1-1.png",
@@ -27,6 +28,7 @@ const Slider = () => {
     },
   ];
   return (
+    // SHADCN CAROUSEL
     <Carousel
       className="w-full py-5"
       plugins={[
@@ -37,6 +39,7 @@ const Slider = () => {
       opts={{ align: "start", loop: true }}
     >
       <CarouselContent>
+        {/* CAROUSEL ITEM LOOPS */}
         {items.map((item, index) => (
           <CarouselItem key={index}>
             <div className="p-1 relative">

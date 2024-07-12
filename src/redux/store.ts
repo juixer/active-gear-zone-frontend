@@ -21,13 +21,16 @@ const persistConfig = {
 const persistedCartReducer = persistReducer(persistConfig, cartReducer);
 
 export const store = configureStore({
+  // REDUCER
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     cart: persistedCartReducer,
   },
+  // MIDDLEWARE
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
+        // THIS IS FOR PERSIST MORE INFO FOLLOW DOC
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(baseApi.middleware),
