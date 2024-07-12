@@ -62,7 +62,7 @@ const ManageProducts = () => {
       const imgData = new FormData();
       imgData.append("image", imgFile);
       const imgRes = await axios.post(
-        `https://api.imgbb.com/1/upload?expiration=600&key=${
+        `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_IMGBB_API_KEY
         }`,
         imgData,

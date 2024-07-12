@@ -30,7 +30,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
     isAvailable,
   } = product;
   return (
-    <Card className={`flex flex-col justify-center items-center shadow-xl`}>
+    <Card className={`flex flex-col justify-center items-center shadow-xl`} data-aos="fade-up-left">
       <CardHeader>
         <CardTitle className="overflow-hidden rounded-md flex flex-col justify-center items-center relative">
           <img

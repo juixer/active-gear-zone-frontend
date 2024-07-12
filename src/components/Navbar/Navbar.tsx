@@ -63,8 +63,9 @@ const Navbar = () => {
   return (
     <div className="bg-zinc-900 text-white sticky top-0 z-50 py-2 px-3">
       <Sheet>
-        <SheetTrigger className="flex lg:hidden text-3xl">
+        <SheetTrigger className="flex items-center gap-5 lg:hidden text-3xl">
           <FaBars />
+          <h1>Active <span className="text-lime-400">Gear</span></h1>
         </SheetTrigger>
         <SheetContent
           side={"left"}
